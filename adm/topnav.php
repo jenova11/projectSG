@@ -1,17 +1,4 @@
 <?php
-
-/**
- * @project XG Proyect
- * @version 2.10.x build 0000
- * @copyright Copyright (C) 2008 - 2012
- */
-
-define('INSIDE'  , TRUE);
-define('INSTALL' , FALSE);
-define('IN_ADMIN', TRUE);
-define('NO_DEBUG',TRUE);
-define('XGP_ROOT', './../');
-
 include(XGP_ROOT . 'global.php');
 
 if ($user['authlevel'] < 1) die(message ($lang['404_page']));

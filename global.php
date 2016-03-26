@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @project XG Proyect
- * @version 2.10.x build 0000
- * @copyright Copyright (C) 2008 - 2012
- */
-
 // SETEADO PARA EVITAR ERRORRES EN VERSION DE PHP MAYORES A 5.3.0
 //error_reporting ( E_ALL & ~E_NOTICE );
 ini_set('display_errors', 0);

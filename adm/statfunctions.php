@@ -1,11 +1,4 @@
 <?php
-
-/**
- * @project XG Proyect
- * @version 2.10.x build 0000
- * @copyright Copyright (C) 2008 - 2012
- */
-
 function GetTechnoPoints ( $CurrentUser ) {
 	global $resource, $pricelist, $reslist;
 
