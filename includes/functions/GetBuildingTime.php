@@ -67,7 +67,7 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 			$time         = (($pricelist[$Element]['metal'] + $pricelist[$Element]['crystal']) / read_config ( 'game_speed' )) * (1 / ($planet[$resource['21']] + 1)) * pow(1 / 2, $planet[$resource['15']]);
 			$time         = floor(($time * 60 * 60));
 		}
-                elseif (in_array($Element, $reslist['casern']))
+         elseif (in_array($Element, $reslist['casern']))
 		{
 			$time         = (($pricelist[$Element]['metal'] + $pricelist[$Element]['crystal']) / read_config ( 'game_speed' )) * (1 / ($planet[$resource['37']] + 1));
 			$time         = floor(($time * 60 * 60));
