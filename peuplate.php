@@ -350,7 +350,7 @@ $pourcent_variation_temp = array(0,0.1,0.2,0.3);
 $planette = '';
 $resultat = '';
 $nbcolonie = 0;
-$requette_b =     'INSERT INTO `xgp_planets` (`name`, `id_owner`, `galaxy`, `system`,`planet`,`last_update`,`planet_type`,`image`,`diameter`,`field_max`,`temp_min`,`temp_max`,`coord_x`,`coord_y`) VALUE';
+$requette_b =     'INSERT INTO `xgp_planets` (`name`, `id_owner`, `galaxy`, `system`,`planet`,`last_update`,`planet_type`,`image`,`diameter`,`field_max`,`temp_min`,`temp_max`,`coord_x`,`coord_y,`stargate`) VALUE';
 $requette_gal_b = 'INSERT INTO `xgp_galaxy` (`galaxy`, `system`, `planet`, `id_planet`,`coord_x`,`coord_y`) VALUE';
 
 $modificateur_case = array(0,40);
@@ -407,6 +407,7 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 					
 					$case = calcul_case($m);
 					$diametre_p = calcul_diametre($case,$retour);
+					$stargate = (mt_rand(1,2)==1)?1:0;
 					$planette .= '<li>'.$i.':'.$k.':'.$position.' =>'.$retour.' | Temp: min->'.$temp[0].'&deg; max->'.$temp[1].'&deg; | taille : '.$case.' | diametre : '.$diametre_p.'km | distance etoile => '.calcul_distance_etoile($m).'</li>';
 					
 				}
@@ -434,6 +435,7 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 					$temp = calcul_temp($m,$modif_temps,$hab);
 					$case = calcul_case($m);
 					$diametre_p = calcul_diametre($case,$retour);
+					$stargate = (mt_rand(1,2)==1)?1:0;
 					$planette .= '<li>'.$i.':'.$k.':'.$position.' =>'.$retour.' | Temp: min->'.$temp[0].'&deg; max->'.$temp[1].'&deg; | taille : '.$case.' | diametre : '.$diametre_p.'km | distance etoile => '.calcul_distance_etoile($m).'</li>';
 				}
 			}
@@ -459,6 +461,7 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 					$temp = calcul_temp($m,$modif_temps,$hab);
 					$case = calcul_case($m);
 					$diametre_p = calcul_diametre($case,$retour);
+					$stargate = (mt_rand(1,2)==1)?1:0;
 					$planette .= '<li>'.$i.':'.$k.':'.$position.' =>'.$retour.' | Temp: min->'.$temp[0].'&deg; max->'.$temp[1].'&deg; | taille : '.$case.' | diametre : '.$diametre_p.'km | distance etoile => '.calcul_distance_etoile($m).'</li>';
 				}
 			}
@@ -484,6 +487,7 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 					$temp = calcul_temp($m,$modif_temps,$hab);
 					$case = calcul_case($m);
 					$diametre_p = calcul_diametre($case,$retour);
+					$stargate = (mt_rand(1,2)==1)?1:0;
 					$planette .= '<li>'.$i.':'.$k.':'.$position.' =>'.$retour.' | Temp: min->'.$temp[0].'&deg; max->'.$temp[1].'&deg; | taille : '.$case.' | diametre : '.$diametre_p.'km | distance etoile => '.calcul_distance_etoile($m).'</li>';
 				}
 			}
@@ -500,6 +504,7 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 					$temp = calcul_temp($m,$modif_temps,$hab);
 					$case = calcul_case($m);
 					$diametre_p = calcul_diametre($case,$retour);
+					$stargate = (mt_rand(1,2)==1)?1:0;
 					$planette .= '<li>'.$i.':'.$k.':'.$position.' =>'.$retour.' | Temp: min->'.$temp[0].'&deg; max->'.$temp[1].'&deg; | taille : '.$case.' | diametre : '.$diametre_p.'km | distance etoile => '.calcul_distance_etoile($m).'</li>';
 			}
 			if ($plan){
@@ -569,9 +574,9 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 			
 			
 			if ($plan){               //(`name`, `id_owner`, `galaxy`, `system`,`planet` ,`last_update`,`planet_type`,    `diameter`,   `field_max`,`temp_min`,      `temp_max`,  `coord_x`,`coord_y`) VALUE';
-				$requette = "('".addslashes ($retour)."', '0', '".$i."', '".$k."','".$position."','".time()."','".$type_p."','".$images."','".$diametre_p."','".$case."','".$temp[0]."','".$temp[1]."','".$rand_x.sprintf('%03d',$position)."','".$rand_y.sprintf('%03d',$position)."')";		
+				$requette = "('".addslashes ($retour)."', '0', '".$i."', '".$k."','".$position."','".time()."','".$type_p."','".$images."','".$diametre_p."','".$case."','".$temp[0]."','".$temp[1]."','".$rand_x.sprintf('%03d',$position)."','".$rand_y.sprintf('%03d',$position)."','".$stargate."')";		
 			}else{
-				$requette = "('".addslashes ($result_s)."', '0', '".$i."', '".$k."','".$position."','".time()."','0','".$images."','0','0','0','0','".$rand_x.sprintf('%03d',$position)."','".$rand_y.sprintf('%03d',$position)."')";		
+				$requette = "('".addslashes ($result_s)."', '0', '".$i."', '".$k."','".$position."','".time()."','0','".$images."','0','0','0','0','".$rand_x.sprintf('%03d',$position)."','".$rand_y.sprintf('%03d',$position)."',0)";		
 			}
 			
 			//echo $requette_b.$requette.'<br />';
