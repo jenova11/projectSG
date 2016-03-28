@@ -14,8 +14,7 @@ if ( defined('INSIDE'))
 	  2 => "crystal_mine",
 	  3 => "deuterium_sintetizer",
 	  4 => "solar_plant",
-
-         10 => "metacity",
+	 	10 => "metacity",
 	 12 => "fusion_plant",
 	 14 => "robot_factory",
 	 15 => "nano_factory",
@@ -23,8 +22,9 @@ if ( defined('INSIDE'))
 	 22 => "metal_store",
 	 23 => "crystal_store",
 	 24 => "deuterium_store",
+	 
 	 31 => "laboratory",
-         32 => "techcenter",
+     32 => "techcenter",
 	 33 => "terraformer",
 	 34 => "ally_deposit",
          36 => "university",
@@ -36,7 +36,9 @@ if ( defined('INSIDE'))
 	 42 => "phalanx",
 	 43 => "sprungtor",
 	 44 => "silo",
-
+     
+	 51 => "stargate",
+			
 	106 => "spy_tech",
 	108 => "computer_tech",
 	109 => "military_tech",
@@ -171,9 +173,10 @@ if ( defined('INSIDE'))
 	 41 => "mondbasis",
 	 42 => "phalanx",
 	 43 => "sprungtor",
-	 44 => "militaire"            
+	 44 => "militaire",
+     51 => "exo"
         );
-        
+       
 	$requeriments = array(
 		 12 => array(   3 =>   5, 113 =>   3),
 		 15 => array(  14 =>  10, 108 =>  10),
@@ -259,7 +262,7 @@ if ( defined('INSIDE'))
 		502 => array(  44 =>   2,  21 =>   1),
 		503 => array(  44 =>   4,  21 =>   1, 117 =>   1),
 	);
-  
+  	
 	$pricelist = array(
             //--DEBUT-- BATIMENTS            
 		  1 => array ( 'metal' =>      60, 'crystal' =>      15, 'credit'=>     0, 'deuterium' =>       0, 'energy' =>    0, 'factor' => 3/2, 'factor_cred' => 1),
@@ -486,7 +489,7 @@ if ( defined('INSIDE'))
 	);
 	
 	$messageColor		 =array(0=>'#F93',1=>'none',2=>'none',3=>'#F30',4=>'#5F9EA0',5=>'green',99=>'#033');
-	$reslist['build']    = array (   1,   2,   3,   4, 12,  14,  15,  21,  22,  23,  24,  31, 32,  33,  34,  36,  37,  39,  10, 41,  42,  43, 44);
+	$reslist['build']    = array (   1,   2,   3,   4, 12,  14,  15,  21,  22,  23,  24,  31, 32,  33,  34,  36,  37,  39,  10, 41,  42,  43, 44,51);
 	$reslist['tech']     = array ( 106, 108, 109, 110, 111,112, 113, 114, 115, 117, 118, 120, 121, 122, 123, 124, 125, 199);
 	$reslist['casern']   = array ( 801, 802, 803);
         $reslist['fleet']    = array ( 202, 203,204, 208, 209, 210, 211, 212, 213, 214, 215,216,217,218,219,220,221,222,223,224,225 );
@@ -503,7 +506,7 @@ if ( defined('INSIDE'))
         $itemDb['energie']  =   array(0=>1,1=>2);
         
         $itemDb['name']  = array(1=>"Generateur V1",2=>"Generateur V2"); ;
-        
+        $itemDb['noBuildable'] = array(51);
         $itemDb['production']=array();
         $itemDb['production']['energie'][1] = array('production'=>150);
         $itemDb['production']['energie'][2] = array('production'=>300);

@@ -10,8 +10,8 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 
 	function IsTechnologieAccessible($user, $planet, $Element)
 	{
-		global $requeriments, $resource;
-
+		global $requeriments, $resource,$itemDb;
+		
 		if (isset($requeriments[$Element]))
 		{
 			
@@ -35,6 +35,8 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 				}
 			}
 			return $enabled;
+		}elseif(in_array($Element,$itemDb['noBuildable'])&&$planet[$resource[$Element]]<1){
+			return false;
 		}
 		else
 		{

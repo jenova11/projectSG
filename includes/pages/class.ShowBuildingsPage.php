@@ -254,7 +254,7 @@ class ShowBuildingsPage
 
 	private function ShowBuildingQueue ( $CurrentPlanet, $CurrentUser, &$Sprice = FALSE )
 	{
-		global $lang;
+		global $lang,$itemDb;
 
 		$CurrentQueue  = $CurrentPlanet['b_building_id'];
 		$QueueID       = 0;
@@ -341,7 +341,7 @@ class ShowBuildingsPage
 
 	public function __construct (&$CurrentPlanet, $CurrentUser)
 	{
-		global $ProdGrid, $lang, $resource, $reslist,$batimentCategory, $_GET;
+		global $ProdGrid, $lang, $resource, $reslist,$batimentCategory, $_GET,$itemDb;
 
 		include_once(XGP_ROOT . 'includes/functions/IsTechnologieAccessible.php');
 		include_once(XGP_ROOT . 'includes/functions/GetElementPrice.php');
@@ -350,7 +350,7 @@ class ShowBuildingsPage
 		CheckPlanetUsedFields ( $CurrentPlanet );
 
 		$parse			= $lang;
-		$Allowed['1'] 	= array(  1,  2,  3,  4, 12, 14, 15, 21, 22, 23, 24, 31, 32, 33, 34,36,37,38,39,10, 44);
+		$Allowed['1'] 	= array(  1,  2,  3,  4, 12, 14, 15, 21, 22, 23, 24, 31, 32, 33, 34,36,37,38,39,10, 44,51);
 		$Allowed['3'] 	= array( 12, 14, 21, 22, 23, 24, 34, 41, 42, 43);
 
 		$TheCommand 	= isset ( $_GET['cmd'] ) ? $_GET['cmd'] : FALSE;
@@ -460,7 +460,7 @@ class ShowBuildingsPage
                                 
 				if (IsTechnologieAccessible($CurrentUser, $CurrentPlanet, $Element))
 				{
-                                       
+                    
 					$HaveRessources        	= IsElementBuyable ($CurrentUser, $CurrentPlanet, $Element, TRUE, FALSE);
 					$parse                 	= array();
 					$parse 					= $lang;
@@ -485,43 +485,58 @@ class ShowBuildingsPage
                                         $parse['classification']        = $batimentCategory[$Element];
 					$parse['click']        	= '';
 					$NextBuildLevel        	= $CurrentPlanet[$resource[$Element]] + 1;
-
+					
 					if ($RoomIsOk && $CanBuildElement)
 					{
 						if ($Queue['lenght'] == 0)
 						{
 							if ($NextBuildLevel == 1)
 							{
-								if ( $HaveRessources == TRUE ){
-									$parse['click'] = "<a href=\"game.php?page=buildings&cmd=insert&building=". $Element ."\"><img src=\"styles/skins/xgproyect/images/Up2.png\" /></a>";
-									$parse['nobuild'] = "";
+								if(!in_array($Element,$itemDb['noBuildable'])){
+									if ( $HaveRessources == TRUE ){
+										$parse['click'] = "<a href=\"game.php?page=buildings&cmd=insert&building=". $Element ."\"><img src=\"styles/skins/xgproyect/images/Up2.png\" /></a>";
+										$parse['nobuild'] = "";
+									}else{
+										//$parse['click'] = "<font color=#FF0000>".$lang['bd_build']."</font>";
+										$parse['click'] = "<font color=#FF0000>".$lang['bd_build']."</font>";
+										$parse['nobuild'] = "display:block;";
+									}
 								}else{
-									//$parse['click'] = "<font color=#FF0000>".$lang['bd_build']."</font>";
-									$parse['click'] = "<font color=#FF0000>".$lang['bd_build']."</font>";
-									$parse['nobuild'] = "display:block;";
+									$parse['click'] = "";
+									$parse['nobuild'] = "";
 								}
 							}
 							else
 							{
-								if ( $HaveRessources == TRUE ){
-									$parse['click'] = "<a href=\"game.php?page=buildings&cmd=insert&building=". $Element ."\"><img src=\"styles/skins/xgproyect/images/Up2.png\" /></a>";
-									$parse['nobuild'] = "";
+								if(!in_array($Element,$itemDb['noBuildable'])){
+									if ( $HaveRessources == TRUE ){
+										$parse['click'] = "<a href=\"game.php?page=buildings&cmd=insert&building=". $Element ."\"><img src=\"styles/skins/xgproyect/images/Up2.png\" /></a>";
+										$parse['nobuild'] = "";
+									}else{
+										//$parse['click'] = "<font color=#FF0000>". $lang['bd_build_next_level'] . $NextBuildLevel ."</font>";
+										$parse['click'] = "";
+										$parse['nobuild'] = "display:block;";
+									}
 								}else{
-									//$parse['click'] = "<font color=#FF0000>". $lang['bd_build_next_level'] . $NextBuildLevel ."</font>";
 									$parse['click'] = "";
-									$parse['nobuild'] = "display:block;";
+									$parse['nobuild'] = "";
 								}
 							}
 						}
 						else
 						{
-							if ( $HaveRessources == TRUE ){
-								$parse['click'] = "<a href=\"game.php?page=buildings&cmd=insert&building=". $Element ."\"><img src=\"styles/skins/xgproyect/images/Up2.png\" /></a>";
-								$parse['nobuild'] = "";
+							if(!in_array($Element,$itemDb['noBuildable'])){
+								if ( $HaveRessources == TRUE ){
+									$parse['click'] = "<a href=\"game.php?page=buildings&cmd=insert&building=". $Element ."\"><img src=\"styles/skins/xgproyect/images/Up2.png\" /></a>";
+									$parse['nobuild'] = "";
+								}else{
+									$parse['click'] = "";
+									$parse['nobuild'] = "display:block;";
+								}
 							}else{
-								$parse['click'] = "";
-								$parse['nobuild'] = "display:block;";
-							}
+									$parse['click'] = "";
+									$parse['nobuild'] = "";
+								}
 						}
 					}
 					elseif ($RoomIsOk && !$CanBuildElement)

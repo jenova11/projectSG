@@ -13,7 +13,6 @@
 			<u>Nombre de lune :</u> 0<br />
 			<u>Distance de l'etoile:</u> 2,596 Md de Km<br />
 			<u>Date de colonisation :</u>  11/06/2012 a 16h30<br />
-			<u>Temp :</u> De 47C a 87C<br />
 		</div>
 	</div>
 	<div id="colonie_lune">

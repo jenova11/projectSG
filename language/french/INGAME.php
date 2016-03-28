@@ -432,6 +432,7 @@ $lang['tech'] = array(
 42 => "Phalange de capteur",
 43 => "Porte de saut spatial",
 44 => "Silo de missiles",
+51 => "Stargate",
 
 100 => "Recherche",
 106 => "Technologie Espionnage",

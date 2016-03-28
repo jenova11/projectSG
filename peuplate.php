@@ -1,7 +1,7 @@
 <?php
 ini_set('memory_limit', '1024M');
-mysql_connect('localhost','spaceg','lolita1122');
-mysql_select_db('spaceg');
+//mysql_connect('localhost','spaceg','lolita1122');
+//mysql_select_db('spaceg');
 $array_secteur = array(1 =>array('x'=>array(0,100),  'y'=>array(0,100),'density_min'=>60,'density_max'=>180),
 		       2 =>array('x'=>array(101,200),'y'=>array(0,100),'density_min'=>70,'density_max'=>190),
 		       3 =>array('x'=>array(201,300),'y'=>array(0,100),'density_min'=>100,'density_max'=>220),
@@ -108,6 +108,37 @@ $array_temp = array(0=> array('temp_min'=>260,'temp_max'=>300,  'taille_min'=>95
 					28=>array('temp_min'=>-160,'temp_max'=>-120,'taille_min'=>64, 'taille_max'=>149	,'dist_min'=>2301	,'dist_max'=>2915),//Trés éloigné
 					29=>array('temp_min'=>-170,'temp_max'=>-130,'taille_min'=>41, 'taille_max'=>121	,'dist_min'=>3000	,'dist_max'=>4000));//Trés éloigné);
 
+$array_temp_hab = array(0=> array('temp_min'=>40,'temp_max'=>80,  'taille_min'=>95, 'taille_max'=>108	,'dist_min'=>30		,'dist_max'=>34),//trés proche
+					    1=> array('temp_min'=>40,'temp_max'=>85,  'taille_min'=>97, 'taille_max'=>110	,'dist_min'=>35		,'dist_max'=>40),//trés proche
+					    2=> array('temp_min'=>35,'temp_max'=>70,  'taille_min'=>98, 'taille_max'=>137	,'dist_min'=>41		,'dist_max'=>45),//trés proche
+					    3=> array('temp_min'=>35,'temp_max'=>75,  'taille_min'=>107,'taille_max'=>147	,'dist_min'=>46		,'dist_max'=>50),//trés proche
+					    4=> array('temp_min'=>30,'temp_max'=>65,  'taille_min'=>108,'taille_max'=>149	,'dist_min'=>51		,'dist_max'=>55),//trés proche
+					    5=> array('temp_min'=>30,'temp_max'=>60,  'taille_min'=>110,'taille_max'=>154	,'dist_min'=>75		,'dist_max'=>80),//proche
+					    6=> array('temp_min'=>25,'temp_max'=>60,  'taille_min'=>112,'taille_max'=>157	,'dist_min'=>85		,'dist_max'=>90),//proche
+					    7=> array('temp_min'=>25,'temp_max'=>55,  'taille_min'=>115,'taille_max'=>159	,'dist_min'=>91		,'dist_max'=>100),//proche
+					    8=> array('temp_min'=>20,'temp_max'=>55,  'taille_min'=>116,'taille_max'=>166	,'dist_min'=>101	,'dist_max'=>110),//proche
+					    9=> array('temp_min'=>20,'temp_max'=>50,  'taille_min'=>118,'taille_max'=>170	,'dist_min'=>111	,'dist_max'=>115),//proche
+					    10=>array('temp_min'=>15,'temp_max'=>45,   'taille_min'=>121,'taille_max'=>198	,'dist_min'=>121	,'dist_max'=>125),//Medium
+					    11=>array('temp_min'=>15,'temp_max'=>45,    'taille_min'=>123,'taille_max'=>212	,'dist_min'=>126	,'dist_max'=>130),//Medium
+					    12=>array('temp_min'=>10,'temp_max'=>40,    'taille_min'=>129,'taille_max'=>249	,'dist_min'=>131	,'dist_max'=>135),//Medium
+					    13=>array('temp_min'=>10,'temp_max'=>40,    'taille_min'=>147,'taille_max'=>256	,'dist_min'=>136	,'dist_max'=>140),//Medium
+					    14=>array('temp_min'=>5,'temp_max'=>35,    'taille_min'=>167,'taille_max'=>237	,'dist_min'=>141	,'dist_max'=>150),//Medium
+					    15=>array('temp_min'=>5,'temp_max'=>35,   'taille_min'=>182,'taille_max'=>348	,'dist_min'=>151	,'dist_max'=>160),//Medium
+					    16=>array('temp_min'=>0,'temp_max'=>30,   'taille_min'=>179,'taille_max'=>325	,'dist_min'=>161	,'dist_max'=>180),//Medium
+					    17=>array('temp_min'=>0,'temp_max'=>30,   'taille_min'=>154,'taille_max'=>297	,'dist_min'=>181	,'dist_max'=>210),//Medium
+					    18=>array('temp_min'=>-5,'temp_max'=>25,    'taille_min'=>142,'taille_max'=>223	,'dist_min'=>211	,'dist_max'=>240),//Medium
+					    19=>array('temp_min'=>-5,'temp_max'=>20,  'taille_min'=>131,'taille_max'=>330	,'dist_min'=>241	,'dist_max'=>300),//Medium
+					    20=>array('temp_min'=>-10,'temp_max'=>15,  'taille_min'=>125,'taille_max'=>412	,'dist_min'=>350	,'dist_max'=>420),//eloigné
+					    21=>array('temp_min'=>-15,'temp_max'=>10,  'taille_min'=>162,'taille_max'=>437	,'dist_min'=>421	,'dist_max'=>510),//eloigné
+					    22=>array('temp_min'=>-20,'temp_max'=>5, 'taille_min'=>179,'taille_max'=>412	,'dist_min'=>520	,'dist_max'=>630),//eloigné
+					    23=>array('temp_min'=>-25,'temp_max'=>0, 'taille_min'=>212,'taille_max'=>348	,'dist_min'=>650	,'dist_max'=>750),//eloigné
+					    24=>array('temp_min'=>-30,'temp_max'=>-10, 'taille_min'=>179,'taille_max'=>239	,'dist_min'=>760	,'dist_max'=>890),//eloigné
+					    25=>array('temp_min'=>-40,'temp_max'=>-15, 'taille_min'=>112,'taille_max'=>214	,'dist_min'=>1060	,'dist_max'=>1270),//Trés éloigné
+					    26=>array('temp_min'=>-50,'temp_max'=>-20,'taille_min'=>97, 'taille_max'=>195	,'dist_min'=>1311	,'dist_max'=>1589),//Trés éloigné
+					    27=>array('temp_min'=>-60,'temp_max'=>-25,'taille_min'=>81, 'taille_max'=>167	,'dist_min'=>1645	,'dist_max'=>1926),//Trés éloigné
+					    28=>array('temp_min'=>-70,'temp_max'=>-30,'taille_min'=>64, 'taille_max'=>149	,'dist_min'=>2301	,'dist_max'=>2915),//Trés éloigné
+					    29=>array('temp_min'=>-80,'temp_max'=>-35,'taille_min'=>41, 'taille_max'=>121	,'dist_min'=>3000	,'dist_max'=>4000));//Trés éloigné);
+								
 $img = array(   0=>'normaltempplanet01',
                 1=>'normaltempplanet02',
                 2=>'normaltempplanet03',
@@ -237,20 +268,38 @@ function calcul_diametre($case,$type){
 		$base = (($case*mt_rand(2,4))*mt_rand(4,10))*$modificateur;
 	return $base;
 }
-function calcul_temp($position,$modif_soleil){
-	global $array_temp,$pourcent_variation_temp;
-	$posneg = mt_rand(1,2);
-	$variation = $pourcent_variation_temp[mt_rand(0,3)];
-	if($posneg == 1){//positif!
-		$temp_min = ($array_temp[($position-1)]['temp_min'])+($array_temp[($position-1)]['temp_min']*$variation)+(($modif_soleil*$variation)+($modif_soleil));
-	}else{//negatif!
-		$temp_min = ($array_temp[($position-1)]['temp_min'])-($array_temp[($position-1)]['temp_min']*$variation)-(($modif_soleil*$variation)+($modif_soleil));
+function calcul_temp($position,$modif_soleil,$hab=false){
+	global $array_temp,$array_temp_hab,$pourcent_variation_temp;
+	if($hab == false){
+		//echo 'je ne suis pas habitable<br />';
+		$posneg = mt_rand(1,2);
+		$variation = $pourcent_variation_temp[mt_rand(0,3)];
+		if($posneg == 1){//positif!
+			$temp_min = ($array_temp[($position-1)]['temp_min'])+($array_temp[($position-1)]['temp_min']*$variation)+(($modif_soleil*$variation)+($modif_soleil));
+		}else{//negatif!
+			$temp_min = ($array_temp[($position-1)]['temp_min'])-($array_temp[($position-1)]['temp_min']*$variation)-(($modif_soleil*$variation)+($modif_soleil));
+		}
+		if($posneg == 1){//positif!
+			$temp_max = ($array_temp[($position-1)]['temp_max'])+($array_temp[($position-1)]['temp_max']*$variation)+(($modif_soleil*$variation)+($modif_soleil));
+		}else{//negatif!
+			$temp_max = ($array_temp[($position-1)]['temp_max'])-($array_temp[($position-1)]['temp_max']*$variation)-(($modif_soleil*$variation)+($modif_soleil));
+		}
+	}else{
+		//echo 'je suis habitable<br />';
+		$posneg = mt_rand(1,2);
+		$variation = $pourcent_variation_temp[mt_rand(0,3)];
+		if($posneg == 1){//positif!
+			$temp_min = ($array_temp_hab[($position-1)]['temp_min'])+($array_temp_hab[($position-1)]['temp_min']*$variation)+(($modif_soleil*$variation)+($modif_soleil));
+		}else{//negatif!
+			$temp_min = ($array_temp_hab[($position-1)]['temp_min'])-($array_temp_hab[($position-1)]['temp_min']*$variation)-(($modif_soleil*$variation)+($modif_soleil));
+		}
+		if($posneg == 1){//positif!
+			$temp_max = ($array_temp_hab[($position-1)]['temp_max'])+($array_temp_hab[($position-1)]['temp_max']*$variation)+(($modif_soleil*$variation)+($modif_soleil));
+		}else{//negatif!
+			$temp_max = ($array_temp_hab[($position-1)]['temp_max'])-($array_temp_hab[($position-1)]['temp_max']*$variation)-(($modif_soleil*$variation)+($modif_soleil));
+		}
 	}
-	if($posneg == 1){//positif!
-		$temp_max = ($array_temp[($position-1)]['temp_max'])+($array_temp[($position-1)]['temp_max']*$variation)+(($modif_soleil*$variation)+($modif_soleil));
-	}else{//negatif!
-		$temp_max = ($array_temp[($position-1)]['temp_max'])-($array_temp[($position-1)]['temp_max']*$variation)-(($modif_soleil*$variation)+($modif_soleil));
-	}
+	
 	return array($temp_min,$temp_max);
 }
 function generate_planete($array_planete,$position){
@@ -282,6 +331,12 @@ function generate_planete($array_planete,$position){
 }
 
 $nbsysteme = 0;
+$nbTroueNoir = 0;
+$sysUnique = 0;
+$sysBi = 0;
+$sysTri = 0;
+$sysQua = 0;
+$sysQuin = 0;
 $coordd = array();
 $aff = '';
 $result = array();
@@ -323,6 +378,7 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 				$modif_temps = $results_1[1];
 				$position = 0;
 				$result_s = $results_1[0];
+				if($result_s == "Trou noir"){$nbTroueNoir++;}
 				$plan = false;
 			}
 			//Cas particulier on peux avoir des systeme binaire :)
@@ -334,6 +390,7 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 					$position++;
 					
 				$result_s = select_soleil($array_soleil,2);
+				if($result_s == "Trou noir"){$nbTroueNoir++;}
 					$planette .= '<li>'.$i.':'.$k.':'.$position.' =>'.$result_s.'</li>';
 				}else{//Ce n'est pas un systeme binaire!
 				$plan = true;
@@ -344,20 +401,24 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 						continue;
 					}
 					$position++;
-					$temp = calcul_temp($m,$modif_temps);
-					if($retour == 'Habitable'){$nbcolonie++;}
+					$hab=false;
+					if($retour == 'Habitable'){$nbcolonie++;$hab=true;}
+					$temp = calcul_temp($m,$modif_temps,$hab);
+					
 					$case = calcul_case($m);
 					$diametre_p = calcul_diametre($case,$retour);
 					$planette .= '<li>'.$i.':'.$k.':'.$position.' =>'.$retour.' | Temp: min->'.$temp[0].'&deg; max->'.$temp[1].'&deg; | taille : '.$case.' | diametre : '.$diametre_p.'km | distance etoile => '.calcul_distance_etoile($m).'</li>';
 					
 				}
 			}
+			//encorre plus rare des systemes de 3
 			if($m == 2){
 				$rand_ternaire = mt_rand(1,100);
 				if(($bin == true)&&($rand_ternaire <= $pourcent_ternaire)){
 					$ter = true;
 					$position++;
 						$result_s = select_soleil($array_soleil,2);
+						if($result_s == "Trou noir"){$nbTroueNoir++;}
 					$planette .= '<li>'.$i.':'.$k.':'.$position.' =>'.$result_s.'</li>';
 				}else{
 				$plan = true;
@@ -368,8 +429,9 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 						continue;
 					}
 					$position++;
-					$temp = calcul_temp($m,$modif_temps);
-					if($retour == 'Habitable'){$nbcolonie++;}
+					$hab=false;
+					if($retour == 'Habitable'){$nbcolonie++;$hab=true;}
+					$temp = calcul_temp($m,$modif_temps,$hab);
 					$case = calcul_case($m);
 					$diametre_p = calcul_diametre($case,$retour);
 					$planette .= '<li>'.$i.':'.$k.':'.$position.' =>'.$retour.' | Temp: min->'.$temp[0].'&deg; max->'.$temp[1].'&deg; | taille : '.$case.' | diametre : '.$diametre_p.'km | distance etoile => '.calcul_distance_etoile($m).'</li>';
@@ -381,6 +443,7 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 					$qua = true;
 					$position++;
 						$result_s = select_soleil($array_soleil,2);
+						if($result_s == "Trou noir"){$nbTroueNoir++;}
 					$planette .= '<li>'.$i.':'.$k.':'.$position.' =>'.$result_s.'</li>';
 				}else{
 					$plan = true;
@@ -391,8 +454,9 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 						continue;
 					}
 					$position++;
-					$temp = calcul_temp($m,$modif_temps);
-					if($retour == 'Habitable'){$nbcolonie++;}
+					$hab=false;
+					if($retour == 'Habitable'){$nbcolonie++;$hab=true;}
+					$temp = calcul_temp($m,$modif_temps,$hab);
 					$case = calcul_case($m);
 					$diametre_p = calcul_diametre($case,$retour);
 					$planette .= '<li>'.$i.':'.$k.':'.$position.' =>'.$retour.' | Temp: min->'.$temp[0].'&deg; max->'.$temp[1].'&deg; | taille : '.$case.' | diametre : '.$diametre_p.'km | distance etoile => '.calcul_distance_etoile($m).'</li>';
@@ -404,6 +468,7 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 					$qui = true;
 					$position++;
 						$result_s = select_soleil($array_soleil,2);
+						if($result_s == "Trou noir"){$nbTroueNoir++;}
 					$planette .= '<li>'.$i.':'.$k.':'.$position.' =>'.$result_s.'</li>';
 				}else{
 					$plan = true;
@@ -414,8 +479,9 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 						continue;
 					}
 					$position++;
-					$temp = calcul_temp($m,$modif_temps);
-					if($retour == 'Habitable'){$nbcolonie++;}
+					$hab=false;
+					if($retour == 'Habitable'){$nbcolonie++;$hab=true;}
+					$temp = calcul_temp($m,$modif_temps,$hab);
 					$case = calcul_case($m);
 					$diametre_p = calcul_diametre($case,$retour);
 					$planette .= '<li>'.$i.':'.$k.':'.$position.' =>'.$retour.' | Temp: min->'.$temp[0].'&deg; max->'.$temp[1].'&deg; | taille : '.$case.' | diametre : '.$diametre_p.'km | distance etoile => '.calcul_distance_etoile($m).'</li>';
@@ -429,8 +495,9 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 					continue;
 				}
 				$position++;
-				$temp = calcul_temp($m,$modif_temps);
-				if($retour == 'Habitable'){$nbcolonie++;}
+				$hab=false;
+					if($retour == 'Habitable'){$nbcolonie++;$hab=true;}
+					$temp = calcul_temp($m,$modif_temps,$hab);
 					$case = calcul_case($m);
 					$diametre_p = calcul_diametre($case,$retour);
 					$planette .= '<li>'.$i.':'.$k.':'.$position.' =>'.$retour.' | Temp: min->'.$temp[0].'&deg; max->'.$temp[1].'&deg; | taille : '.$case.' | diametre : '.$diametre_p.'km | distance etoile => '.calcul_distance_etoile($m).'</li>';
@@ -508,11 +575,11 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 			}
 			
 			//echo $requette_b.$requette.'<br />';
-			mysql_query($requette_b.$requette) or die(mysql_error());
-			$requette_gal = "('".$i."', '".$k."', '".$position."', '".mysql_insert_id()."','".$rand_x.sprintf('%03d',$position)."','".$rand_y.sprintf('%03d',$position)."')";
+			//-->mysql_query($requette_b.$requette) or die(mysql_error());
+			//$requette_gal = "('".$i."', '".$k."', '".$position."', '".mysql_insert_id()."','".$rand_x.sprintf('%03d',$position)."','".$rand_y.sprintf('%03d',$position)."')";
 
 			//echo $requette_gal_b.$requette_gal.'<br />';
-			mysql_query($requette_gal_b.$requette_gal) or die(mysql_error());
+			//->mysql_query($requette_gal_b.$requette_gal) or die(mysql_error());
 			//mysql_query();
 		}
 		
@@ -526,10 +593,10 @@ for ($i=1,$j=count($array_secteur);$i<=$j;$i++){
 ?>
 <div style="float:left;width:400px;height:230px"><?=$aff?></div>
 
-<div style="width:200px">
+<div style="width:410px;">
 Nombre de systeme: <?=$nbsysteme?><br />
-Nombre de plantes colonisable : <?=$nbcolonie?></div>
-
+Nombre de plantes colonisable : <?=$nbcolonie?><br />
+Nombre de trou noir : <?=$nbTroueNoir?></div>
 Liste des coordonee;
 <pre>
 <?=$resultat ?>
