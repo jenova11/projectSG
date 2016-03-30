@@ -144,6 +144,11 @@ $(document).ready(function($){
         	<tr height="20">
         		<td colspan="2" class="c">Option</td>
         	</tr>
+        	                    <tr>
+                    	<th colspan="2">
+                    		Ne pas débarqu&eacute; les troupes au sol <input type="checkbox" name="debarq" value="0" />
+                    	</th>
+                    </tr>
 			<tr>	
 				<th>Facteur de vitesse : 
 					<select name="speed" id="speed_factor">

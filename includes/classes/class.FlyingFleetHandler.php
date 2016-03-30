@@ -511,6 +511,7 @@ class FlyingFleetHandler {
 
         $FleetRecord = explode(";", $FleetRow['fleet_array']);
         $FleetFighter = unserialize($FleetRow['fleet_fighter']);
+        $FleetTroupes = unserialize($FleetRow['fleet_troupes']);
         $QryUpdFleet = "";
         foreach ($FleetRecord as $Item => $Group) {
             if ($Group != '') {
@@ -522,6 +523,11 @@ class FlyingFleetHandler {
             foreach ($FleetFighter as $key => $value) {
                 $QryUpdFleet .= "`" . $resource[$key] . "` = `" . $resource[$key] . "` + '" . $value . "', \n";
             }
+        }
+        if(is_array($FleetTroupes)){
+        	foreach ($FleetTroupes as $key => $value) {
+        		$QryUpdFleet .= "`" . $resource[$key] . "` = `" . $resource[$key] . "` + '" . $value . "', \n";
+        	}
         }
         $QryUpdatePlanet = "UPDATE {{table}} SET ";
         if ($QryUpdFleet != "")
@@ -549,17 +555,29 @@ class FlyingFleetHandler {
     }
 
     private function StoreGoodsToPlanet($FleetRow, $Start = FALSE) {
-
+		global $resource;
         //fix resource by jstar
         $targetPlanet = doquery("SELECT * FROM {{table}} WHERE `galaxy` = " . intval($FleetRow['fleet_start_galaxy']) . " AND `system` = " . intval($FleetRow['fleet_start_system']) . " AND `planet` = " . intval($FleetRow['fleet_start_planet']) . ";", 'planets', TRUE);
         $targetUser = doquery('SELECT * FROM {{table}} WHERE id=' . intval($targetPlanet['id_owner']), 'users', TRUE);
         PlanetResourceUpdate($targetUser, $targetPlanet, time());
-        //
-
+        
+        //On as pas empecher le débarquement donc on stocke les troupes sur la planete d'arriver
+		if($FleetRow['no_debarq']== 0){
+			$FleetTroupes = unserialize($FleetRow['fleet_troupes']);
+			if(is_array($FleetTroupes)){
+				foreach ($FleetTroupes as $key => $value) {
+					$QryUpdatePlanetTroupes .= "`" . $resource[$key] . "` = `" . $resource[$key] . "` + '" . $value . "',";
+				}
+			}
+		}else{
+			$QryUpdatePlanetTroupes = "";
+		}
         $QryUpdatePlanet = "UPDATE {{table}} SET ";
+        $QryUpdatePlanet .= $QryUpdatePlanetTroupes;
         $QryUpdatePlanet .= "`metal` = `metal` + '" . $FleetRow['fleet_resource_metal'] . "', ";
         $QryUpdatePlanet .= "`crystal` = `crystal` + '" . $FleetRow['fleet_resource_crystal'] . "', ";
-        $QryUpdatePlanet .= "`deuterium` = `deuterium` + '" . $FleetRow['fleet_resource_deuterium'] . "' ";
+        $QryUpdatePlanet .= "`deuterium` = `deuterium` + '" . $FleetRow['fleet_resource_deuterium'] . "'";
+        
         $QryUpdatePlanet .= "WHERE ";
 
         if ($Start == TRUE) {
@@ -630,6 +648,10 @@ class FlyingFleetHandler {
                 }
 
                 $QryUpdateFleet = "UPDATE {{table}} SET ";
+                
+                if($FleetRow['no_debarq']== 0){
+                	$QryUpdateFleet .= "`fleet_troupes` = '',";
+                }                
                 $QryUpdateFleet .= "`fleet_resource_metal` = '0' , ";
                 $QryUpdateFleet .= "`fleet_resource_crystal` = '0' , ";
                 $QryUpdateFleet .= "`fleet_resource_deuterium` = '0' , ";

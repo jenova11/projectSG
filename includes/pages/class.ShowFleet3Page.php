@@ -610,9 +610,10 @@ class ShowFleet3Page
 		$QryInsertFleet .= "`fleet_resource_crystal` = '". $TransCrystal ."', ";
 		$QryInsertFleet .= "`fleet_resource_deuterium` = '". $TransDeuterium ."', ";
                 $QryInsertFleet .= "`fleet_fighter` = '". $fighterSerialize  ."', ";
-                $QryInsertFleet .= "`fleet_troupes` '".$troupesSerialize."',";
+                $QryInsertFleet .= "`fleet_troupes` = '".$troupesSerialize."',";
 		$QryInsertFleet .= "`fleet_target_owner` = '". intval($TargetPlanet['id_owner']) ."', ";
 		$QryInsertFleet .= "`fleet_group` = '".intval($fleet_group_mr)."',  ";
+		$QryInsertFleet .= "`no_debarq` = '".intval((isset($_POST['debarq']))?1:0)."',  ";
 		$QryInsertFleet .= "`start_time` = '". time() ."';";
 		doquery( $QryInsertFleet, 'fleets');
 
