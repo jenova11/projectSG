@@ -58,7 +58,7 @@ class ShowFleet3Page
 		$MyDBRec       		= doquery("SELECT `id`,`onlinetime`,`ally_id`,`urlaubs_modus` FROM {{table}} WHERE `id` = '". intval($CurrentUser['id'])."';", 'users', TRUE);
 		
 		//Ne pas attaquer les colo sans proprio
-		if($_POST['mission'] == 1 && $TargetPlanet['id_owner'] == 0){
+		if(($_POST['mission'] == 1 || $_POST['mission'] == 12) && $TargetPlanet['id_owner'] == 0){
 				message ("<font color=\"red\"><b>".$lang['fl_attk_no_colo']."</b></font>", "game.php?page=fleet", 2);
 		}
 		$fleetarray  = unserialize ( base64_decode ( str_rot13 ( $_POST["usedfleet"] ) ) );
@@ -177,8 +177,8 @@ class ShowFleet3Page
 			exit();
 			//exit ( header ( "Location: game.php?page=fleet" ) );
 		}
-
-		if ($_POST['mission'] != 15)
+		
+		if ($_POST['mission'] != 15)//Es que c'est une expedition?
 		{
 			if (mysql_num_rows($select) < 1 && $fleetmission != 7)
 			{
@@ -218,7 +218,7 @@ class ShowFleet3Page
 				message ("<font color=\"red\"><b>".$lang['fl_expedition_fleets_limit']."</b></font>", "game.php?page=fleet", 2);
 			}
 		}
-
+		
 		$select = mysql_fetch_array($select);
 
 		if ($select['id_owner'] == $CurrentUser['id'])
@@ -235,6 +235,22 @@ class ShowFleet3Page
 		{
 			$YourPlanet = FALSE;
 			$UsedPlanet = FALSE;
+		}
+		
+		//TODO Faire un check pour les invasion ici
+		if($fleetmission == 12){//Donc c'est une invasion
+			if($YourPlanet){ //le joueur esaye d'inva ca propre planete hum hum
+				message ("<font color=\"red\"><b>Vous ne pouvez pas lancer une invasion sur une de vos planete</b></font>", "game.php?page=fleet", 2);
+			}else if($UsedPlanet){//Le joueur lance une inva sur une planete sans proprio
+				message ("<font color=\"red\"><b>Vous ne pouvez pas lancer une invasion sur une planete sans proprietaire</b></font>", "game.php?page=fleet", 2);
+			}else{//Le joueur lance une inva sur une planete éligible
+				$select = doquery("SELECT * FROM {{table}} WHERE planete_id = ".$select['id']."", "invasion");
+				if(mysql_num_rows($select) == 0){//Il n'y as pas d'autre invasion en cour
+					
+				}else{//Il y as deja une invasion en cour :/
+					message ("<font color=\"red\"><b>Il y as deja une invasion sur la planete cibler</b></font>", "game.php?page=fleet", 2);
+				}
+			}
 		}
 		if($fleetmission == 11 && $select['id_owner'] != 0){
 			message ("<font color=\"red\"><b>Vous ne pouvez pas exploit&eacutes; une planete déja prise</b></font>", "game.php?page=fleet", 2);

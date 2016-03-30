@@ -19,6 +19,7 @@ $lang['type_mission'][7]  					= 'Coloniser';
 $lang['type_mission'][8]  					= 'Recycler';
 $lang['type_mission'][9]  					= 'D&eacute;truire';
 $lang['type_mission'][11]  					= 'Exploit&eacutes;';
+$lang['type_mission'][12]  					= 'Invasion';
 $lang['type_mission'][15] 					= 'Exp&eacute;ditions';
 $lang['type_mission'][16] 					= 'Analiser';
 

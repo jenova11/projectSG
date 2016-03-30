@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @project XG Proyect
- * @version 2.10.x build 0000
- * @copyright Copyright (C) 2008 - 2012
+ * @project SG SpaceG
+ * @version 3.0 build 0000
+ * @copyright Copyright (C) 2008 - 2016
  */
 if (!defined('INSIDE'))
     die(header("location:../../"));
@@ -1838,6 +1838,17 @@ class FlyingFleetHandler {
         }
     }
 
+    private function MissionCaseInvasion($FleetRow){
+    	
+    	//On récup le proprio de la planete qui lance l'invasion
+    	//On récup le proprio de la planete qui recoi l'invasion
+    	
+    	//Si il y as deja une inva on la met a jour
+    	
+    	//Sinon on la crée
+    	
+    }
+    
     public function __construct(&$planet) {
         global $resource;
 
@@ -1903,7 +1914,8 @@ class FlyingFleetHandler {
                 case 11:
                     $this->MissionCaseExploit($CurrentFleet);
                     break;
-
+                case 12:
+                	$this->MissionCaseInvasion($CurrentFleet);
                 case 15:
                     $this->MissionCaseExpedition($CurrentFleet);
                     break;

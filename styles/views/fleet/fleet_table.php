@@ -69,14 +69,14 @@
 					<th>Mission</th>
 					<th>
 						<select name="mission">
-                                                        <option value="3">Transporter</option>
+                            <option value="3">Transporter</option>
 							<option value="4">Stationner</option>
 							<option value="1">Attaquer</option>
 							<option value="6">Espionner</option>
 							<option value="7">Coloniser</option>
 							<option value="8">Recycler</option>
 							<option value="11">Exploit&eacute;</option>
-							<option value="15">Exp&eacute;ditions</option>
+							<option value="12">Invasion</option>
 						</select>
 					</th>
 				</tr>

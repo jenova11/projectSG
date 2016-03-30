@@ -243,6 +243,7 @@ class Fleets
 										8 => $lang['type_mission'][8],
 										9 => $lang['type_mission'][9],
 										11 => $lang['type_mission'][11],
+										12 => $lang['type_mission'][12],
 										15 => $lang['type_mission'][15]
 									);
 		if ( $mission_number === 0 )
