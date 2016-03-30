@@ -15,7 +15,6 @@ class ShowFleet3Page
 		global $resource, $pricelist, $reslist, $lang, $transportable;
 
 		include_once ( XGP_ROOT . 'includes/functions/IsVacationMode.php' );
-
 		$parse	=	$lang;
 
 		if ( IsVacationMode ( $CurrentUser ) )
@@ -74,11 +73,10 @@ class ShowFleet3Page
                         if($value > ($CurrentPlanet[$resource[$key]]-$fleetarray[$key])){
                             exit ( header ( "Location: game.php?page=fleet" ) );
                         }else{
-                            
+                        	$totalFight += $value;
+                        	$fighter[$key]= $value;
+                        	$FleetSubQRY2     .= "`".$resource[$key] . "` = `" . $resource[$key] . "` - " . $value . ", ";
                         }
-                        $totalFight += $value;
-                        $fighter[$key]= $value;
-                        $FleetSubQRY2     .= "`".$resource[$key] . "` = `" . $resource[$key] . "` - " . $value . ", ";
                     }
                 }
                 if($_POST['totalTransportable'] < $totalFight){
@@ -86,6 +84,22 @@ class ShowFleet3Page
                 }
                 $fighterSerialize = serialize($fighter);
                
+                $fleetTroupes = $_POST['unitTroupes'];
+                $troupes = array();
+                $totalTroupes = 0;
+                $FleetSubQRY3 = "";
+                foreach($fleetTroupes AS $key => $value){
+                	if(in_array($key,$reslist['casern'])){
+                		if($value > $CurrentPlanet[$resource[$key]]){
+                			exit (header("Location: game.php?page=fleet"));
+                		}else{
+                			$totalTroupes += $value;
+                			$troupes[$key] = $value;
+                			$FleetSubQRY3 .= "`".$resource[$key]."`=`".$resource[$key]."` - ".$value.", ";
+                		}
+                	}
+                }
+                $troupesSerialize = serialize($troupes);
 		//if ( $TargetPlanet["destruyed"] != 0 )
 		//{
 		//	echo 'ereur 1';
@@ -152,7 +166,7 @@ class ShowFleet3Page
 			}else{
 				$planettypeSql =  "";
 			}
-			$select     = doquery("SELECT * FROM {{table}} WHERE galaxy = '". $galaxy ."' AND system = '". $system ."' AND planet = '". $planet ."' ".$planettypeSql."", "planets");
+			$select = doquery("SELECT * FROM {{table}} WHERE galaxy = '". $galaxy ."' AND system = '". $system ."' AND planet = '". $planet ."' ".$planettypeSql."", "planets");
 		}
 
 		//Et non on ne peux pas envoyer de la flotte sur ca meme planete :p
@@ -306,10 +320,10 @@ class ShowFleet3Page
 			message($lang['fl_no_slots'], "game.php?page=fleet", 1);
 		}
 
-		if ($_POST['metal_e'] + $_POST['cristal_e'] + $_POST['uradium_e'] < 1 && $_POST['mission'] == 3)
-		{
-			message("<font color=\"lime\"><b>".$lang['fl_empty_transport']."</b></font>", "game.php?page=fleet", 1);
-		}
+		//if ($_POST['metal_e'] + $_POST['cristal_e'] + $_POST['uradium_e'] < 1 && $_POST['mission'] == 3)
+		//{
+		//	message("<font color=\"lime\"><b>".$lang['fl_empty_transport']."</b></font>", "game.php?page=fleet", 1);
+		//}
 
 		if ($_POST['mission'] != 15)
 		{
@@ -596,6 +610,7 @@ class ShowFleet3Page
 		$QryInsertFleet .= "`fleet_resource_crystal` = '". $TransCrystal ."', ";
 		$QryInsertFleet .= "`fleet_resource_deuterium` = '". $TransDeuterium ."', ";
                 $QryInsertFleet .= "`fleet_fighter` = '". $fighterSerialize  ."', ";
+                $QryInsertFleet .= "`fleet_troupes` '".$troupesSerialize."',";
 		$QryInsertFleet .= "`fleet_target_owner` = '". intval($TargetPlanet['id_owner']) ."', ";
 		$QryInsertFleet .= "`fleet_group` = '".intval($fleet_group_mr)."',  ";
 		$QryInsertFleet .= "`start_time` = '". time() ."';";
@@ -604,6 +619,7 @@ class ShowFleet3Page
 		$QryUpdatePlanet  = "UPDATE `{{table}}` SET ";
 		$QryUpdatePlanet .= $FleetSubQRY;
                 $QryUpdatePlanet .= $FleetSubQRY2;
+                $QryUpdatePlanet .= $FleetSubQRY3;
 		$QryUpdatePlanet .= "`metal` = `metal` - ". $TransMetal .", ";
 		$QryUpdatePlanet .= "`crystal` = `crystal` - ". $TransCrystal .", ";
 		$QryUpdatePlanet .= "`deuterium` = `deuterium` - ". ($TransDeuterium + $consumption) ." ";

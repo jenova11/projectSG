@@ -23,7 +23,11 @@ include_once ( XGP_ROOT . 'includes/classes/class.Plugin.php' );
 include_once ( XGP_ROOT . 'includes/classes/class.PluginsManager.php' );
 
 $debug 		= new debug();
-
+function ___d(array $debug){
+	echo '<pre>';
+	print_r($debug);
+	echo '</pre>';
+}
 if ( filesize ( XGP_ROOT . 'config.php' ) === 0 && ( ( !defined ( 'INSTALL' ) ) OR ( !INSTALL ) ) )
 {
 	exit ( header ( 'location:' . XGP_ROOT .  'install/' ) );

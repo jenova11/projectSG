@@ -75,7 +75,8 @@ class ShowFleet1Page
 					$fleet['consumption']		= Fleets::ship_consumption ( $i, $CurrentUser );
 					$fleet['speed']				= Fleets::fleet_max_speed ( "", $i, $CurrentUser );
 					$fleet['capacity']			= $pricelist[$i]['capacity'];
-                                        $fleet['transportVx']                   = $pricelist[$i]['transportVx']*$_POST["ship$i"];
+                    $fleet['transportVx']       = $pricelist[$i]['transportVx']*$_POST["ship$i"];
+                    $fleet['transportTr']		= $pricelist[$i]['transportTr']*$_POST["ship$i"];
 					$fleet['ship']				= $_POST["ship$i"];
 					$consomation 			   += $fleet['consumption']*$fleet['ship'];
 					$fleetSpeed[] = $fleet['speed'];
@@ -83,7 +84,8 @@ class ShowFleet1Page
 					//print_r($fleet);
 					$speedalls[$i]             = Fleets::fleet_max_speed ( "", $i, $CurrentUser);
 					$FleetHiddenBlock		  .= parsetemplate ( $inputs_template , $fleet );
-					$transportVx                      += $fleet['transportVx'];
+					$transportVx              += $fleet['transportVx'];
+					$transportTr			  += $fleet['transportTr'];	
 					$liste_fleet 			  .= '<tr>
 														<th>'.$lang['tech'][$i].'</th><th>'.$fleet['ship'].'</th><th>'.$fleet['consumption']*$fleet['ship'].'</th><th>'.$fleet['speed']	.'</th><th>'.$fleet['capacity']*$fleet['ship'].'</th>
 												  </tr>';
@@ -121,6 +123,34 @@ class ShowFleet1Page
                 }
                  $transportables .= '</table>';
                  
+                 if($transportTr > 0){
+                 	$transportables_units = '';
+                 	$iii=0;
+                 	foreach($reslist['casern'] AS $key=>$value){
+                 		if($CurrentPlanet[$resource[$value]]){
+                 			
+                 			if(isset($_POST["ship$value"])){
+                 				$dispo = $CurrentPlanet[$resource[$value]] - $_POST["ship$value"];
+                 			}else{
+                 				$dispo = $CurrentPlanet[$resource[$value]];
+                 			}
+                 			if ($iii > 0 && $iii % 2 == 0){
+                 				$transportables_units .= '</tr><tr>';
+                 			}
+                 			
+                 			$transportables_units .= "<th>";
+                 			$transportables_units .= $lang['tech'][$value].' ('.$dispo.')';
+                 			$transportables_units .= "</th>";
+                 			$transportables_units .= "<th>";
+                 			$transportables_units .= '<input type="text" class="unit-emport" data-max="'.$dispo.'" id="units-'.$value.'" name="unitTroupes['.$value.']" style="width: 39px;" value="0" />';
+                 			$transportables_units .= "</th>";
+                 			$iii++;
+                 			//echo $lang['tech'][$value].'|('.$dispo.')<br />';
+                 		}
+                 	}
+                 	$transportables_units .= "</tr>";
+                 }
+                 $transportables_units .= '</table>';                 
 		//print_r($fleetSpeed);
 		if ( !isset($fleet['fleetlist']) )
 		{
@@ -199,6 +229,8 @@ class ShowFleet1Page
 		$parse['capacity']			= $capacite-$parse['consomation'];
 		$parse['transportFighter']              = $transportVx ;
                 $parse['transportable']                 = $transportables;
+                $parse['transportables_units'] = $transportables_units;
+                        
                 $parse['list_fleet']			= $liste_fleet;
 		
 		$parse['planet_type'] 			= $CurrentPlanet['planet_type'];

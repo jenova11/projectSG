@@ -108,7 +108,7 @@ $(document).ready(function($){
 						<div id="capacite">{capacity}</div>
 					</th>
 				</tr>
-                                <tr height="20">
+                <tr height="20">
 					<th width="30">Capacit&eacute; Chasseur</th> 
 					<th>
 						<div id="capaciteV">{transportFighter}</div>
@@ -133,6 +133,12 @@ $(document).ready(function($){
                         <td colspan="4" class="c">Emport de chasseur</td>
                     </tr>
                     {transportable}
+                </table>
+                        <table width="515" border="0" cellpadding="0" cellspacing="1">
+                    <tr height="20">
+                        <td colspan="4" class="c">Emport de troupes</td>
+                    </tr>
+                    {transportables_units}
                 </table>
 		<table width="515" border="0" cellpadding="0" cellspacing="1">
         	<tr height="20">
