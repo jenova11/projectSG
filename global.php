@@ -9,6 +9,11 @@ $user          	= array();
 $lang          	= array();
 $link          	= "";
 $IsUserChecked 	= FALSE;
+//-------------- POG --------------
+include_once ( XGP_ROOT . 'includes/Model/configuration.php');
+include_once ( XGP_ROOT . 'includes/classes/class.database.php');
+include_once ( XGP_ROOT . 'includes/Model/objects/class.message.php');
+//-------------- /POG --------------
 
 include_once ( XGP_ROOT . 'includes/constants.php' );
 include_once ( XGP_ROOT . 'includes/GeneralFunctions.php' );
