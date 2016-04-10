@@ -22,49 +22,17 @@
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
 * @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=message&attributeList=array+%28%0A++0+%3D%3E+%27message_owner%27%2C%0A++1+%3D%3E+%27message_sender%27%2C%0A++2+%3D%3E+%27message_time%27%2C%0A++3+%3D%3E+%27message_type%27%2C%0A++4+%3D%3E+%27message_from%27%2C%0A++5+%3D%3E+%27message_subject%27%2C%0A++6+%3D%3E+%27message_text%27%2C%0A++7+%3D%3E+%27read%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527INT%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527INT%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527INT%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527INT%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527INT%2527%252C%250A%2529&classList=array+%28%0A++0+%3D%3E+%27%27%2C%0A++1+%3D%3E+%27%27%2C%0A++2+%3D%3E+%27%27%2C%0A++3+%3D%3E+%27%27%2C%0A++4+%3D%3E+%27%27%2C%0A++5+%3D%3E+%27%27%2C%0A++6+%3D%3E+%27%27%2C%0A++7+%3D%3E+%27%27%2C%0A%29
 */
-include_once('class.pog_base.php');
+include_once(XGP_ROOT.$GLOBALS['configuration']['baseclass_path'].'class.pog_base.php');
 class message extends POG_Base
 {
 	public $messageId = '';
-
-	/**
-	 * @var INT
-	 */
 	public $message_owner;
-	
-	/**
-	 * @var INT
-	 */
 	public $message_sender;
-	
-	/**
-	 * @var INT
-	 */
 	public $message_time;
-	
-	/**
-	 * @var INT
-	 */
 	public $message_type;
-	
-	/**
-	 * @var VARCHAR(255)
-	 */
 	public $message_from;
-	
-	/**
-	 * @var TEXT
-	 */
 	public $message_subject;
-	
-	/**
-	 * @var TEXT
-	 */
 	public $message_text;
-	
-	/**
-	 * @var INT
-	 */
 	public $read;
 	
 	public $pog_attribute_type = array(
