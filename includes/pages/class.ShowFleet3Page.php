@@ -217,10 +217,8 @@ class ShowFleet3Page
 			{
 				message ("<font color=\"red\"><b>".$lang['fl_expedition_fleets_limit']."</b></font>", "game.php?page=fleet", 2);
 			}
-		}
-		
+		}	
 		$select = mysql_fetch_array($select);
-
 		if ($select['id_owner'] == $CurrentUser['id'])
 		{
 			$YourPlanet = TRUE;
@@ -241,7 +239,7 @@ class ShowFleet3Page
 		if($fleetmission == 12){//Donc c'est une invasion
 			if($YourPlanet){ //le joueur esaye d'inva ca propre planete hum hum
 				message ("<font color=\"red\"><b>Vous ne pouvez pas lancer une invasion sur une de vos planete</b></font>", "game.php?page=fleet", 2);
-			}else if($UsedPlanet){//Le joueur lance une inva sur une planete sans proprio
+			}else if(!$UsedPlanet){//Le joueur lance une inva sur une planete sans proprio
 				message ("<font color=\"red\"><b>Vous ne pouvez pas lancer une invasion sur une planete sans proprietaire</b></font>", "game.php?page=fleet", 2);
 			}else{//Le joueur lance une inva sur une planete éligible
 				$select = doquery("SELECT * FROM {{table}} WHERE planete_id = ".$select['id']."", "invasion");
