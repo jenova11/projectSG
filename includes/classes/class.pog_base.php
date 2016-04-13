@@ -54,7 +54,7 @@ class POG_Base
 	{
 		if ($GLOBALS['configuration']['db_encoding'] && !is_numeric($text))
 		{
-			return base64_encode($text);
+			return mysqli_real_escape_string ($text);
 		}
 		return addslashes($text);
 	}

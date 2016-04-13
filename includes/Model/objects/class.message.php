@@ -23,7 +23,7 @@
 * @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=message&attributeList=array+%28%0A++0+%3D%3E+%27message_owner%27%2C%0A++1+%3D%3E+%27message_sender%27%2C%0A++2+%3D%3E+%27message_time%27%2C%0A++3+%3D%3E+%27message_type%27%2C%0A++4+%3D%3E+%27message_from%27%2C%0A++5+%3D%3E+%27message_subject%27%2C%0A++6+%3D%3E+%27message_text%27%2C%0A++7+%3D%3E+%27read%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527INT%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527INT%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527INT%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527INT%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527INT%2527%252C%250A%2529&classList=array+%28%0A++0+%3D%3E+%27%27%2C%0A++1+%3D%3E+%27%27%2C%0A++2+%3D%3E+%27%27%2C%0A++3+%3D%3E+%27%27%2C%0A++4+%3D%3E+%27%27%2C%0A++5+%3D%3E+%27%27%2C%0A++6+%3D%3E+%27%27%2C%0A++7+%3D%3E+%27%27%2C%0A%29
 */
 include_once(XGP_ROOT.$GLOBALS['configuration']['baseclass_path'].'class.pog_base.php');
-class message extends POG_Base
+class messageModel extends POG_Base
 {
 	public $messageId = '';
 	public $message_owner;
@@ -65,7 +65,7 @@ class message extends POG_Base
 		}
 	}
 	
-	function message($message_owner='', $message_sender='', $message_time='', $message_type='', $message_from='', $message_subject='', $message_text='', $read='')
+	function messageModel($message_owner='', $message_sender='', $message_time='', $message_type='', $message_from='', $message_subject='', $message_text='', $read='')
 	{
 		$this->message_owner = $message_owner;
 		$this->message_sender = $message_sender;
@@ -86,7 +86,7 @@ class message extends POG_Base
 	function Get($messageId)
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select * from `message` where `messageid`='".intval($messageId)."' LIMIT 1";
+		$this->pog_query = "select * from `xgp_message` where `messageid`='".intval($messageId)."' LIMIT 1";
 		$cursor = Database::Reader($this->pog_query, $connection);
 		while ($row = Database::Read($cursor))
 		{
@@ -116,7 +116,7 @@ class message extends POG_Base
 	{
 		$connection = Database::Connect();
 		$sqlLimit = ($limit != '' ? "LIMIT $limit" : '');
-		$this->pog_query = "select * from `message` ";
+		$this->pog_query = "select * from `xgp_messages` ";
 		$messageList = Array();
 		if (sizeof($fcv_array) > 0)
 		{
@@ -205,14 +205,15 @@ class message extends POG_Base
 	function Save()
 	{
 		$connection = Database::Connect();
+		//___d($connection);
 		$rows = 0;
 		if ($this->messageId!=''){
-			$this->pog_query = "select `messageid` from `message` where `messageid`='".$this->messageId."' LIMIT 1";
+			$this->pog_query = "select `messageid` from `xgp_messages` where `messageid`='".$this->messageId."' LIMIT 1";
 			$rows = Database::Query($this->pog_query, $connection);
 		}
 		if ($rows > 0)
 		{
-			$this->pog_query = "update `message` set 
+			$this->pog_query = "update `xgp_messages` set 
 			`message_owner`='".$this->Escape($this->message_owner)."', 
 			`message_sender`='".$this->Escape($this->message_sender)."', 
 			`message_time`='".$this->Escape($this->message_time)."', 
@@ -224,7 +225,7 @@ class message extends POG_Base
 		}
 		else
 		{
-			$this->pog_query = "insert into `message` (`message_owner`, `message_sender`, `message_time`, `message_type`, `message_from`, `message_subject`, `message_text`, `read` ) values (
+			$this->pog_query = "insert into `xgp_messages` (`message_owner`, `message_sender`, `message_time`, `message_type`, `message_from`, `message_subject`, `message_text`, `read` ) values (
 			'".$this->Escape($this->message_owner)."', 
 			'".$this->Escape($this->message_sender)."', 
 			'".$this->Escape($this->message_time)."', 
@@ -234,7 +235,10 @@ class message extends POG_Base
 			'".$this->Escape($this->message_text)."', 
 			'".$this->Escape($this->read)."' )";
 		}
-		$insertId = Database::InsertOrUpdate($this->pog_query, $connection);
+		
+		echo '<pre>'.$this->pog_query.'</pre>';
+		$insertId = Database::InsertOrUpdate($this->pog_query);
+		//$connection->query($this->pog_query);
 		if ($this->messageId == "")
 		{
 			$this->messageId = $insertId;
@@ -261,7 +265,7 @@ class message extends POG_Base
 	function Delete()
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "delete from `message` where `messageid`='".$this->messageId."'";
+		$this->pog_query = "delete from `xgp_messages` where `messageid`='".$this->messageId."'";
 		return Database::NonQuery($this->pog_query, $connection);
 	}
 	
@@ -277,7 +281,7 @@ class message extends POG_Base
 		if (sizeof($fcv_array) > 0)
 		{
 			$connection = Database::Connect();
-			$pog_query = "delete from `message` where ";
+			$pog_query = "delete from `xgp_messages` where ";
 			for ($i=0, $c=sizeof($fcv_array); $i<$c; $i++)
 			{
 				if (sizeof($fcv_array[$i]) == 1)

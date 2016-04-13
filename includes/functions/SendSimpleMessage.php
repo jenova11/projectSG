@@ -17,7 +17,21 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 		}
 
 		$Message = (strpos($Message, "/adm/") === FALSE ) ? $Message : "";
-
+		
+		//$mess = new messageModel();
+		
+		//$mess->message_owner = $Owner;
+		//$mess->message_sender = $Sender;
+		//$mess->message_time = $Time;
+		//$mess->message_type = $Type;
+		//$mess->message_from = $From;
+		//$mess->message_subject = $Subject;
+		//$mess->message_text = $Message;
+		
+		//___d($mess);
+		
+		//$mess->SaveNew();
+		
 		$QryInsertMessage  = "INSERT INTO {{table}} SET ";
 		$QryInsertMessage .= "`message_owner` 	= '". $Owner 	."', ";
 		$QryInsertMessage .= "`message_sender` 	= '". $Sender 	."', ";

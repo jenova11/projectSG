@@ -20,6 +20,7 @@
 		{
 			$this->connection = new PDO($driver.':host='.$serverName.';port='.$databasePort.';dbname='.$databaseName, $databaseUser, $databasePassword);
 			$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$this->connection->setAttribute(PDO::ATTR_TIMEOUT , "10");
 		}
 		if (!$this->connection)
 		{
@@ -107,6 +108,7 @@
 		}
 		catch (PDOException $e)
 		{
+			//___d($e);
 			return false;
 		}
 	}
