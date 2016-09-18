@@ -1,5 +1,17 @@
 <?php
+require ( XGP_ROOT . 'vendor/autoload.php' );
+use DebugBar\StandardDebugBar;
+global $debugbar;
+$debugbar = new StandardDebugBar();
 
+
+$debugbar["messages"]->addMessage("hello world!");
+$debugbarRenderer = $debugbar->getJavascriptRenderer()->setBaseUrl('/projectSG')->setEnableJqueryNoConflict(false);
+
+
+
+
+//print_r($debugbarRenderer->render());
 // SETEADO PARA EVITAR ERRORRES EN VERSION DE PHP MAYORES A 5.3.0
 //error_reporting ( E_ALL & ~E_NOTICE );
 ini_set('display_errors', 0);
@@ -98,7 +110,7 @@ if ( INSTALL != TRUE )
 		include ( XGP_ROOT . 'includes/classes/class.FlyingFleetHandler.php' );
 		$_fleets = doquery ( "SELECT fleet_start_galaxy,fleet_start_system,fleet_start_planet,fleet_start_type FROM {{table}} WHERE `fleet_start_time` <= '" . time() . "' and `fleet_mess` ='0' order by fleet_id asc;" , 'fleets' ); // OR fleet_end_time <= ".time()
 
-		while ( $row = mysql_fetch_array ( $_fleets ) )
+		while ( $row = mysqli_fetch_array ( $_fleets ) )
 		{
 			$array 					= array();
 			$array['galaxy'] 		= $row['fleet_start_galaxy'];
@@ -109,11 +121,11 @@ if ( INSTALL != TRUE )
 			$temp = new FlyingFleetHandler ( $array );
 		}
 
-		mysql_free_result ( $_fleets );
+		mysqli_free_result ( $_fleets );
 
 		$_fleets = doquery ( "SELECT fleet_end_galaxy,fleet_end_system,fleet_end_planet ,fleet_end_type FROM {{table}} WHERE `fleet_end_time` <= '" . time() . " order by fleet_id asc';" , 'fleets' ); // OR fleet_end_time <= ".time()
 
-		while ( $row = mysql_fetch_array ($_fleets ) )
+		while ( $row = mysqli_fetch_array ($_fleets ) )
 		{
 			$array 					= array();
 			$array['galaxy'] 		= $row['fleet_end_galaxy'];
@@ -124,7 +136,7 @@ if ( INSTALL != TRUE )
 			$temp = new FlyingFleetHandler ( $array );
 		}
 
-		mysql_free_result ( $_fleets);
+		mysqli_free_result ( $_fleets);
 		unset ( $_fleets );
 
 		if ( defined ( 'IN_ADMIN' ) )

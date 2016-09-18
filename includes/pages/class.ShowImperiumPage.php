@@ -22,7 +22,7 @@ class ShowImperiumPage
 		$parse 	= $lang;
 		$planet = array();
 
-		while ( $p = mysql_fetch_array ( $planetsrow ) )
+		while ( $p = mysqli_fetch_array ( $planetsrow ) )
 		{
 			$planet[] = $p;
 		}

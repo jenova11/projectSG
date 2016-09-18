@@ -37,8 +37,8 @@ class ShowBanquePage
                                 echo 'hey hey hey';
                                 $result = doquery("SELECT id FROM {{table}} WHERE galaxy = ".$_POST['secteur']." AND system = ".$_POST['sys']." AND planet = ".$_POST['planet']." AND control_type = 1 AND banque >= 1",'planets');
                                 
-                                if(mysql_num_rows($result)>0){
-                                    $data = mysql_fetch_array($result);
+                                if(mysqli_num_rows($result)>0){
+                                    $data = mysqli_fetch_array($result);
                                     $this->moneyTransfer($CurrentPlanet, $data['id'], $valeurTrans);
                                 }
                                
@@ -50,7 +50,7 @@ class ShowBanquePage
                     }
                 }
                 $colonieOk = doquery('SELECT id,name,galaxy,system,planet FROM {{table}} WHERE  id_owner = '.$CurrentUser['id'].' AND control_type = 1 AND banque >= 1', 'planets');
-                while($data = mysql_fetch_array($colonieOk)){
+                while($data = mysqli_fetch_array($colonieOk)){
                     if($data['id'] != $CurrentPlanet['id']){
                         $parse['colonie'] .= '<option value="'.$data['id'].'">'.$data['name'].' ['.$data['galaxy'].':'.$data['system'].':'.$data['planet'].']</option>';
                     }     

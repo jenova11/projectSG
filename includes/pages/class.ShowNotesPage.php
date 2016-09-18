@@ -109,7 +109,7 @@ class ShowNotesPage
 				$list	= '';
 				
 				$NotesBodyEntryTPL=gettemplate('notes/notes_body_entry');
-				while($note = mysql_fetch_array($notes_query))
+				while($note = mysqli_fetch_array($notes_query))
 				{
 					$count++;
 

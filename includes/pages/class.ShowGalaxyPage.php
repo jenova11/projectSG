@@ -28,11 +28,11 @@ class ShowGalaxyPage extends GalaxyRows
 		$CanDestroy    	= $CurrentPlanet[$resource[213]] + $CurrentPlanet[$resource[214]];
 
 		$maxfleet       = doquery("SELECT * FROM {{table}} WHERE `fleet_owner` = '". intval($CurrentUser['id']) ."';", 'fleets');
-		$maxfleet_count = mysql_num_rows($maxfleet);
+		$maxfleet_count = mysqli_num_rows($maxfleet);
 		$currentGal = isset ( $_POST["galaxy"] ) ? (($_POST["galaxyRight"])?$_POST["galaxy"]+1 :$_POST["galaxy"]):$CurrentPlanet['galaxy'];
-		$maxGalaxy = mysql_fetch_array(doquery("SELECT max(`galaxy`) FROM {{table}}", 'planets'));
+		$maxGalaxy = mysqli_fetch_array(doquery("SELECT max(`galaxy`) FROM {{table}}", 'planets'));
 		
-		$maxSystem = mysql_fetch_array(doquery("SELECT max(`system`) FROM {{table}} WHERE `galaxy` = ".$currentGal."", 'planets'));
+		$maxSystem = mysqli_fetch_array(doquery("SELECT max(`system`) FROM {{table}} WHERE `galaxy` = ".$currentGal."", 'planets'));
 		//echo "SELECT max(`system`) FROM {{table}} WHERE `galaxy` = ".$currentGal."";
 		$postedGalaxy	= isset ( $_POST["galaxy"] ) ? $_POST["galaxy"] : NULL;
 		$postedSystem	= isset ( $_POST["system"] ) ? $_POST["system"] : NULL;
@@ -259,8 +259,8 @@ class ShowGalaxyPage extends GalaxyRows
 		$template		= gettemplate('galaxy/galaxy_row');
 		$parcialCount	= 0;
 		
-		$numPlanet		= mysql_num_rows($GalaxyQuery);
-		while ( $GalaxyInfo = mysql_fetch_array ( $GalaxyQuery ) )
+		$numPlanet		= mysqli_num_rows($GalaxyQuery);
+		while ( $GalaxyInfo = mysqli_fetch_array ( $GalaxyQuery ) )
 		{
 			for ($Planet = $start; $Planet < $numPlanet; $Planet++)
 			{

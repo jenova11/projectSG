@@ -10,6 +10,7 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 
 	function SendSimpleMessage ( $Owner, $Sender, $Time, $Type, $From, $Subject, $Message)
 	{
+		global $debugbar;
 
 		if ($Time == '')
 		{
@@ -29,6 +30,8 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 		//$mess->message_text = $Message;
 		
 		//___d($mess);
+		$debugbar["messages"]->addMessage('--DEBUG MESSAGE--');
+		$debugbar["messages"]->addMessage('owner=>'.$Owner.' Sender:'.$Sender);
 		
 		//$mess->SaveNew();
 		
@@ -36,10 +39,10 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 		$QryInsertMessage .= "`message_owner` 	= '". $Owner 	."', ";
 		$QryInsertMessage .= "`message_sender` 	= '". $Sender 	."', ";
 		$QryInsertMessage .= "`message_time` 	= '". $Time 	."', ";
-		$QryInsertMessage .= "`message_type` 	= '". mysql_real_escape_string($Type) 	."', ";
+		$QryInsertMessage .= "`message_type` 	= '". $Type 	."', ";
 		$QryInsertMessage .= "`message_from` 	= '". $From 	."', ";
-		$QryInsertMessage .= "`message_subject` = '".  mysql_real_escape_string($Subject) ."', ";
-		$QryInsertMessage .= "`message_text` 	= '". mysql_real_escape_string($Message) 	."';";
+		$QryInsertMessage .= "`message_subject` = '".  $Subject ."', ";
+		$QryInsertMessage .= "`message_text` 	= '". $Message 	."';";
 
 		doquery( $QryInsertMessage, 'messages');
 

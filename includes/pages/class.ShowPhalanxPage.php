@@ -93,7 +93,7 @@ class ShowPhalanxPage
 
             $Record = 0;
             $fpage = array();
-            while ($FleetRow = mysql_fetch_array($FleetToTarget))
+            while ($FleetRow = mysqli_fetch_array($FleetToTarget))
             {
                 $Record++;
 

@@ -12,7 +12,7 @@ class ShowFleet3Page
 {
 	function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 	{
-		global $resource, $pricelist, $reslist, $lang, $transportable;
+		global $resource, $pricelist, $reslist, $lang, $transportable,$debugbar;
 
 		include_once ( XGP_ROOT . 'includes/functions/IsVacationMode.php' );
 		$parse	=	$lang;
@@ -180,13 +180,13 @@ class ShowFleet3Page
 		
 		if ($_POST['mission'] != 15)//Es que c'est une expedition?
 		{
-			if (mysql_num_rows($select) < 1 && $fleetmission != 7)
+			if (mysqli_num_rows($select) < 1 && $fleetmission != 7)
 			{
 			echo 'ereur 8';
 			exit();
 			//exit ( header ( "Location: game.php?page=fleet" ) );
 			}
-			elseif ($fleetmission == 9 && mysql_num_rows($select) < 1)
+			elseif ($fleetmission == 9 && mysqli_num_rows($select) < 1)
 			{
 			echo 'ereur 9';
 			exit();
@@ -243,7 +243,7 @@ class ShowFleet3Page
 				message ("<font color=\"red\"><b>Vous ne pouvez pas lancer une invasion sur une planete sans proprietaire</b></font>", "game.php?page=fleet", 2);
 			}else{//Le joueur lance une inva sur une planete éligible
 				$select = doquery("SELECT * FROM {{table}} WHERE planete_id = ".$select['id']."", "invasion");
-				if(mysql_num_rows($select) == 0){//Il n'y as pas d'autre invasion en cour
+				if(mysqli_num_rows($select) == 0){//Il n'y as pas d'autre invasion en cour
 					
 				}else{//Il y as deja une invasion en cour :/
 					message ("<font color=\"red\"><b>Il y as deja une invasion sur la planete cibler</b></font>", "game.php?page=fleet", 2);
@@ -326,7 +326,7 @@ class ShowFleet3Page
 			message("<font color=\"lime\"><b>".$lang['fl_in_vacation_player']."</b></font>", "game.php?page=fleet", 2);
 		}
 
-		$FlyingFleets = mysql_fetch_assoc(doquery("SELECT COUNT(fleet_id) as Number FROM {{table}} WHERE `fleet_owner`='".intval($CurrentUser['id'])."'", 'fleets'));
+		$FlyingFleets = mysqli_fetch_assoc(doquery("SELECT COUNT(fleet_id) as Number FROM {{table}} WHERE `fleet_owner`='".intval($CurrentUser['id'])."'", 'fleets'));
 		$ActualFleets = $FlyingFleets["Number"];
 
 		if ((Fleets::get_max_fleets ( $CurrentUser[$resource[108]] , $CurrentUser['rpg_amiral'] ) ) <= $ActualFleets)
@@ -415,10 +415,10 @@ class ShowFleet3Page
 			exit ( header ( "Location: game.php?page=fleet" ) );
 		}
 		
-		$maxGalaxy = mysql_fetch_array(doquery("SELECT max(`galaxy`) FROM {{table}}", 'planets'));
+		$maxGalaxy = mysqli_fetch_array(doquery("SELECT max(`galaxy`) FROM {{table}}", 'planets'));
 		
-		$maxSystem = mysql_fetch_array(doquery("SELECT max(`system`) FROM {{table}} WHERE `galaxy` = ".$_POST['galaxy']."", 'planets'));
-		$maxPlanet = mysql_fetch_array(doquery("SELECT max(`planet`) FROM {{table}} WHERE `galaxy` = ".$_POST['galaxy']." AND `system` = ".$_POST['system']."", 'planets'));
+		$maxSystem = mysqli_fetch_array(doquery("SELECT max(`system`) FROM {{table}} WHERE `galaxy` = ".$_POST['galaxy']."", 'planets'));
+		$maxPlanet = mysqli_fetch_array(doquery("SELECT max(`planet`) FROM {{table}} WHERE `galaxy` = ".$_POST['galaxy']." AND `system` = ".$_POST['system']."", 'planets'));
 		if (!$_POST['galaxy'] || !is_numeric($_POST['galaxy']) || $_POST['galaxy'] > $maxGalaxy[0] || $_POST['galaxy'] < 1)
 		{
 			exit ( header ( "Location: game.php?page=fleet" ) );
@@ -603,7 +603,7 @@ class ShowFleet3Page
 				$fleet['end_time']         += $fleet['start_time'] -  $AksStartTime['Start'];
 			}
 		}
-
+		$debugbar["messages"]->addMessage($_POST);
 		$QryInsertFleet  = "INSERT INTO {{table}} SET ";
 		$QryInsertFleet .= "`fleet_owner` = '". intval($CurrentUser['id']) ."', ";
 		$QryInsertFleet .= "`fleet_mission` = '".intval($_POST['mission'])."',  ";

@@ -45,7 +45,7 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 		$page							= isset ( $_GET['page'] ) ? $_GET['page'] : NULL;
 		$mode							= isset ( $_GET['mode'] ) ? $_GET['mode'] : NULL; 
 		
-		while ($CurPlanet = mysql_fetch_array($ThisUsersPlanets))
+		while ($CurPlanet = mysqli_fetch_array($ThisUsersPlanets))
 		{
 			if ($CurPlanet["destruyed"] == 0)
 			{

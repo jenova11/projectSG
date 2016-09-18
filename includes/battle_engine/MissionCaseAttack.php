@@ -165,7 +165,7 @@ function getPlayerGroup($fleetRow)
 function getPlayerGroupFromQuery($result, $targetUser = false)
 {
     $playerGroup = new PlayerGroup();
-    while ($fleetRow = mysql_fetch_assoc($result))
+    while ($fleetRow = mysqli_fetch_assoc($result))
     {
         //making the current fleet object
         $serializedTypes = explode(';', $fleetRow['fleet_array']);

@@ -318,7 +318,7 @@ class ShowResourcesPage
                 $sql = 'SELECT * FROM {{table}} WHERE id_planet = '.$CurrentPlanet['id'].' AND id_item in ('.implode(',',$itemDb['energie']).')';
 
                 $result = doquery($sql,'entrepot');
-                while ($data = mysql_fetch_array($result)){
+                while ($data = mysqli_fetch_array($result)){
                     $CurrentPlanet['energy_max'] += ($itemDb['production']['energie'][$data['id_item']]['production'] * $data['qts']);
                     $CurrRow                             = array();
 		    $CurrRow['name']                     = $itemDb['name'][$data['id_item']];

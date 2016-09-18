@@ -13,11 +13,11 @@ class ShowOverviewPage
 	function __construct ( $CurrentUser , $CurrentPlanet )
 	{
 		global $planetrow, $lang,$messageColor;
-
+		
 		include_once (XGP_ROOT . 'includes/functions/InsertJavaScriptChronoApplet.php');
 		include_once (XGP_ROOT . 'includes/classes/class.FlyingFleetsTable.php');
 		include_once (XGP_ROOT . 'includes/functions/CheckPlanetUsedFields.php');
-
+        
 		$FlyingFleetsTable = new FlyingFleetsTable();
 
 		$lunarow = doquery("SELECT * FROM {{table}} WHERE `id_owner` = '" . intval($CurrentPlanet['id_owner']) . "' AND `galaxy` = '" . intval($CurrentPlanet['galaxy']) . "' AND `system` = '" . intval($CurrentPlanet['system']) . "' AND  `planet` = '" . intval($CurrentPlanet['planet']) . "' AND `planet_type`='3'",'planets',TRUE);
@@ -66,7 +66,7 @@ class ShowOverviewPage
 					$kendifilo		= '';
 					$digerfilo		= '';	
 
-					while($satir = mysql_fetch_array($filokontrol))
+					while($satir = mysqli_fetch_array($filokontrol))
 					{
 						$kendifilo = $satir['fleet_owner'];
 						$digerfilo = $satir['fleet_target_owner'];
@@ -76,7 +76,7 @@ class ShowOverviewPage
 
 					$filokontrol = doquery("SELECT * FROM {{table}} WHERE fleet_target_owner = '" . intval($CurrentUser['id']) . "' AND fleet_end_galaxy='" . intval($CurrentPlanet['galaxy']) . "' AND fleet_end_system='" . intval($CurrentPlanet['system']) . "' AND fleet_end_planet='" . intval($CurrentPlanet['planet']) . "'",'fleets');
 
-					while($satir = mysql_fetch_array($filokontrol))
+					while($satir = mysqli_fetch_array($filokontrol))
 					{
 						$kendifilo = $satir['fleet_owner'];
 						$digerfilo = $satir['fleet_target_owner'];
@@ -138,7 +138,7 @@ class ShowOverviewPage
 
 				$Record = 0;
 
-				while($FleetRow = mysql_fetch_array($OwnFleets))
+				while($FleetRow = mysqli_fetch_array($OwnFleets))
 				{
 					$Record++;
 
@@ -192,7 +192,7 @@ class ShowOverviewPage
 				{
 					$dostfilo = doquery("SELECT * FROM {{table}} WHERE `fleet_end_galaxy` = '" . intval($hedefgalaksi) . "' AND `fleet_end_system` = '" . intval($hedefsistem) . "' AND `fleet_end_planet` = '" . intval($hedefgezegen) . "' AND `fleet_group` = '" . intval($filogrubu) . "';",'fleets');
 					$Record1 = 0;
-					while($FleetRow = mysql_fetch_array($dostfilo))
+					while($FleetRow = mysqli_fetch_array($dostfilo))
 					{
 						$StartTime = $FleetRow['fleet_start_time'];
 						$StayTime = $FleetRow['fleet_end_stay'];
@@ -247,7 +247,7 @@ class ShowOverviewPage
 				$OtherFleets = doquery("SELECT * FROM {{table}} WHERE `fleet_target_owner` = '" . intval($CurrentUser['id']) . "';",'fleets');
 
 				$Record = 2000;
-				while($FleetRow = mysql_fetch_array($OtherFleets))
+				while($FleetRow = mysqli_fetch_array($OtherFleets))
 				{
 					if($FleetRow['fleet_owner'] != $CurrentUser['id'])
 					{
@@ -279,7 +279,7 @@ class ShowOverviewPage
 				$planets_query = doquery("SELECT * FROM `{{table}}` WHERE id_owner='" . intval($CurrentUser['id']) . "' AND `destruyed` = 0","planets");
 				$Colone = 1;
 				$AllPlanets = "<tr>";
-				while($CurrentUserPlanet = mysql_fetch_array($planets_query))
+				while($CurrentUserPlanet = mysqli_fetch_array($planets_query))
 				{
 					if($CurrentUserPlanet["id"] != $CurrentUser["current_planet"] && $CurrentUserPlanet['planet_type'] != 3)
 					{
@@ -433,7 +433,7 @@ class ShowOverviewPage
 				
 				$message = doquery("SELECT * FROM `{{table}}` WHERE message_owner = ".intval($CurrentPlanet['id_owner'])." ORDER BY message_id DESC",'messages');
 				$parse['message'] = '';
-				while($data = mysql_fetch_array($message)){
+				while($data = mysqli_fetch_array($message)){
 					//echo '<pre>';
 					//print_r($data);
 					//echo '</pre>';

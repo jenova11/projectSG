@@ -12,7 +12,7 @@ class ShowFleet1Page
 {
 	function __construct ( $CurrentUser , $CurrentPlanet )
 	{
-		global $resource, $pricelist, $reslist, $lang, $transportable;
+		global $resource, $pricelist, $reslist, $lang, $transportable,$debugbar;
 
 		#####################################################################################################
 		// SOME DEFAULT VALUES
@@ -166,11 +166,11 @@ class ShowFleet1Page
 		// LOAD PLANET TYPES OPTIONS
 		#####################################################################################################
 		$parse['options_planettype']	= '';
-
+		$debugbar["messages"]->addMessage($planet_type);
 		foreach ( $planet_type as $type )
 		{
 			$value++;
-
+			$debugbar["messages"]->addMessage($value);
 			$options['value']			=	$value;
 
 			if ( $value == $t )
@@ -292,9 +292,9 @@ class ShowFleet1Page
 		#####################################################################################################
 		$colonies	= SortUserPlanets ( $CurrentUser );
 
-		if ( mysql_num_rows ( $colonies ) > 1 )
+		if ( mysqli_num_rows ( $colonies ) > 1 )
 		{
-			while ( $row = mysql_fetch_array ( $colonies ) )
+			while ( $row = mysqli_fetch_array ( $colonies ) )
 			{
 				if ( $CurrentPlanet['galaxy'] <> $row['galaxy'] or
 					 $CurrentPlanet['system'] <> $row['system'] or
@@ -326,7 +326,7 @@ class ShowFleet1Page
 		#####################################################################################################
 		$acs_fleets	= '';
 
-		while ( $row = mysql_fetch_array ( $getCurrentAcs ) )
+		while ( $row = mysqli_fetch_array ( $getCurrentAcs ) )
 		{
 			$members 	= explode ( "," , $row['eingeladen'] );
 

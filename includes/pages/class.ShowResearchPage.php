@@ -130,7 +130,7 @@ class ShowResearchPage
 		$inves 				= doquery("SELECT laboratory FROM {{table}} WHERE id_owner='".intval($CurrentUser['id'])."' ORDER BY laboratory DESC LIMIT ".$limite."", 'planets');
 		$lablevel 			= 0;
 
-		while (	$row = mysql_fetch_array ( $inves ) )
+		while (	$row = mysqli_fetch_array ( $inves ) )
 		{
 			$lablevel 	   += $row['laboratory'];
 		}

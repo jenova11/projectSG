@@ -61,13 +61,17 @@ switch ( ( isset ( $_GET['page'] ) ) )
 		if ($_POST)
 		{
 			$login = doquery("SELECT `id`,`username`,`password`,`banaday` FROM {{table}} WHERE `username` = '" . mysql_escape_value($_POST['username']) . "' AND `password` = '" . md5($_POST['password']) . "' LIMIT 1", "users", TRUE);
+			//print_r($login);
+			//die();
 			if($login['banaday'] <= time() && $login['banaday'] != '0')
 			{
+				
 				doquery("UPDATE {{table}} SET `banaday` = '0', `bana` = '0' WHERE `username` = '".$login['username']."' LIMIT 1;", 'users');
 				doquery("DELETE FROM {{table}} WHERE `who` = '".$login['username']."'",'banned');
 			}
 			if ($login)
 			{
+
 				if (isset($_POST["rememberme"]))
 				{
 					$expiretime = time() + 31536000;
@@ -83,6 +87,7 @@ switch ( ( isset ( $_GET['page'] ) ) )
 				setcookie(read_config ( 'cookie_name' ), $cookie, $expiretime, "/", "", 0);
 				doquery("UPDATE `{{table}}` SET `current_planet` = `id_planet` WHERE `id` ='".$login["id"]."'", 'users');
 				unset ( $dbsettings );
+			
 				header ( 'location:game.php?page=overview' );
 				exit;
 			}

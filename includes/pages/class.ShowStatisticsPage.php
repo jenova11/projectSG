@@ -105,7 +105,7 @@ class ShowStatisticsPage
 			$parse['stat_values'] = "";
 			$query = doquery($stats_sql, '');
 			$StatAllianceTableTPL=gettemplate('stat/stat_alliancetable');
-			while ($StatRow = mysql_fetch_assoc($query))
+			while ($StatRow = mysqli_fetch_assoc($query))
 			{
 				$parse['ally_rank']       = $start;
 				if ( $StatRow[ $OldRank ] == 0 || $StatRow[ $Rank ] == 0)
@@ -182,7 +182,7 @@ class ShowStatisticsPage
 
 			$previusId = 0;
 			$StatPlayerTableTPL=gettemplate('stat/stat_playertable');
-			while ($StatRow = mysql_fetch_assoc($query))
+			while ($StatRow = mysqli_fetch_assoc($query))
 			{
 				$parse['player_rank']     = $start;
 				if ( $StatRow[ $OldRank ] == 0 || $StatRow[ $Rank ] == 0)

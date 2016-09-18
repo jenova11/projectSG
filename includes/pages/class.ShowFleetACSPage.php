@@ -71,7 +71,7 @@ class ShowFleetACSPage
 			$added_user_id 	= 0;
 			$member_qry 		= doquery("SELECT `id` FROM {{table}} WHERE `username` ='".mysql_escape_value($_POST['addtogroup'])."' ;",'users');
 
-			while ( $row = mysql_fetch_array ( $member_qry ) )
+			while ( $row = mysqli_fetch_array ( $member_qry ) )
 			{
 				$added_user_id .= $row['id'];
 			}
@@ -93,12 +93,12 @@ class ShowFleetACSPage
 
 		$query = doquery("SELECT * FROM {{table}} WHERE fleet_id = '" . intval($fleetid) . "'", 'fleets');
 
-		if ( mysql_num_rows ( $query ) != 1 )
+		if ( mysqli_num_rows ( $query ) != 1 )
 		{
 			exit ( header ( "Location: game.php?page=fleet" ) );
 		}
 
-		$daten = mysql_fetch_array ( $query );
+		$daten = mysqli_fetch_array ( $query );
 
 		if ( $daten['fleet_start_time'] <= time() or
 			 $daten['fleet_end_time'] < time() or
@@ -181,7 +181,7 @@ class ShowFleetACSPage
 				$fq = doquery("SELECT * FROM {{table}} WHERE fleet_owner='".intval($CurrentUser[id])."'", "fleets");
 				$i  = 0;
 
-				while ( $f = mysql_fetch_array ( $fq ) )
+				while ( $f = mysqli_fetch_array ( $fq ) )
 				{
 					$i++;
 
@@ -266,7 +266,7 @@ class ShowFleetACSPage
 
 			$parse['fleetpagerow']	=	$flying_fleets;
 
-			while ( $row = mysql_fetch_array ( $acs_madnessred ) )
+			while ( $row = mysqli_fetch_array ( $acs_madnessred ) )
 			{
 				$acs_code  			.= $row['name'];
 				$acs_invited 		.= $row['eingeladen'];
@@ -281,7 +281,7 @@ class ShowFleetACSPage
 				{
 					$member_qry 	= doquery("SELECT `username` FROM {{table}} WHERE `id` ='".intval($b)."' ;",'users');
 
-					while ( $row = mysql_fetch_array ( $member_qry ) )
+					while ( $row = mysqli_fetch_array ( $member_qry ) )
 					{
 						$members_option['value']	= '';
 						$members_option['selected']	= '';

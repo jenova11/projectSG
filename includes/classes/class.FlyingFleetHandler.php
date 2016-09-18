@@ -671,17 +671,19 @@ class FlyingFleetHandler {
     }
 
     private function MissionCaseStay($FleetRow) {
-        global $lang, $resource;
+        global $lang, $resource,$debugbar;
 
         if ($FleetRow['fleet_mess'] == 0) {
             if ($FleetRow['fleet_start_time'] <= time()) {
+            	$debugbar["messages"]->addMessage($FleetRow);
                 $QryGetTargetPlanet = "SELECT * FROM {{table}} ";
                 $QryGetTargetPlanet .= "WHERE ";
                 $QryGetTargetPlanet .= "`galaxy` = '" . $FleetRow['fleet_end_galaxy'] . "' AND ";
                 $QryGetTargetPlanet .= "`system` = '" . $FleetRow['fleet_end_system'] . "' AND ";
-                $QryGetTargetPlanet .= "`planet` = '" . $FleetRow['fleet_end_planet'] . "' AND ";
-                $QryGetTargetPlanet .= "`planet_type` = '" . $FleetRow['fleet_end_type'] . "';";
+                $QryGetTargetPlanet .= "`planet` = '" . $FleetRow['fleet_end_planet'] . "'";
+                $debugbar["messages"]->addMessage($QryGetTargetPlanet);
                 $TargetPlanet = doquery($QryGetTargetPlanet, 'planets', TRUE);
+                $debugbar["messages"]->addMessage($TargetPlanet);
                 $TargetUserID = $TargetPlanet['id_owner'];
 
                 $TargetAdress = sprintf($lang['sys_adress_planet'], $FleetRow['fleet_end_galaxy'], $FleetRow['fleet_end_system'], $FleetRow['fleet_end_planet']);
@@ -690,8 +692,16 @@ class FlyingFleetHandler {
                 $TargetMessage = $lang['sys_stay_mess_start'] . "<a href=\"game.php?page=galaxy&mode=3&galaxy=" . $FleetRow['fleet_end_galaxy'] . "&system=" . $FleetRow['fleet_end_system'] . "\">";
                 $TargetMessage .= $TargetAdress . "</a>" . $lang['sys_stay_mess_end'] . "<br />" . $TargetAddedGoods;
 
-                SendSimpleMessage($TargetUserID, '', $FleetRow['fleet_start_time'], 5, $lang['sys_mess_qg'], $lang['sys_stay_mess_stay'], $TargetMessage);
-                SendSimpleMessage($FleetRow['fleet_owner'], '', $FleetRow['fleet_start_time'], 5, $lang['sys_mess_qg'], $lang['sys_stay_mess_stay'], $TargetMessage);
+                if($TargetUserID == $FleetRow['fleet_owner']){
+                	SendSimpleMessage($TargetUserID, 0, $FleetRow['fleet_start_time'], 5, $lang['sys_mess_qg'], $lang['sys_stay_mess_stay'], $TargetMessage);
+                }else{
+                	SendSimpleMessage($TargetUserID, 0, $FleetRow['fleet_start_time'], 5, $lang['sys_mess_qg'], $lang['sys_stay_mess_stay'], $TargetMessage);
+                	SendSimpleMessage($FleetRow['fleet_owner'], 0, $FleetRow['fleet_start_time'], 5, $lang['sys_mess_qg'], $lang['sys_stay_mess_stay'], $TargetMessage);
+                }
+                
+                SendSimpleMessage($TargetUserID, 0, $FleetRow['fleet_start_time'], 5, $lang['sys_mess_qg'], $lang['sys_stay_mess_stay'], $TargetMessage);
+                SendSimpleMessage($FleetRow['fleet_owner'], 0, $FleetRow['fleet_start_time'], 5, $lang['sys_mess_qg'], $lang['sys_stay_mess_stay'], $TargetMessage);
+                
                 $this->RestoreFleetToPlanet($FleetRow, FALSE);
                 doquery("DELETE FROM {{table}} WHERE `fleet_id` = '" . $FleetRow["fleet_id"] . "';", 'fleets');
             }
@@ -1047,7 +1057,7 @@ class FlyingFleetHandler {
         $iPlanetCount = mysql_result(doquery("SELECT count(*) FROM {{table}} WHERE `id_owner` = '" . $FleetRow['fleet_owner'] . "' AND `planet_type` = '1' AND `destruyed` = '0'", 'planets'), 0);
 
         if ($FleetRow['fleet_mess'] == 0) {
-            $iGalaxyPlace = mysql_fetch_array(doquery("SELECT * FROM {{table}} WHERE `galaxy` = '" . $FleetRow['fleet_end_galaxy'] . "' AND `system` = '" . $FleetRow['fleet_end_system'] . "' AND `planet` = '" . $FleetRow['fleet_end_planet'] . "';", 'planets'), 0);
+            $iGalaxyPlace = mysqli_fetch_array(doquery("SELECT * FROM {{table}} WHERE `galaxy` = '" . $FleetRow['fleet_end_galaxy'] . "' AND `system` = '" . $FleetRow['fleet_end_system'] . "' AND `planet` = '" . $FleetRow['fleet_end_planet'] . "';", 'planets'), 0);
             $TargetAdress = sprintf($lang['sys_adress_planet'], $FleetRow['fleet_end_galaxy'], $FleetRow['fleet_end_system'], $FleetRow['fleet_end_planet']);
             if ($iGalaxyPlace['id_owner'] == 0 && $iGalaxyPlace['planet_type'] == 1) {
                 if ($iPlanetCount >= MAX_PLAYER_PLANETS) {
@@ -1113,7 +1123,7 @@ class FlyingFleetHandler {
         $iPlanetCount = mysql_result(doquery("SELECT count(*) FROM {{table}} WHERE `id_owner` = '" . $FleetRow['fleet_owner'] . "' AND `planet_type` = '1' AND `destruyed` = '0'", 'planets'), 0);
 
         if ($FleetRow['fleet_mess'] == 0) {
-            $iGalaxyPlace = mysql_fetch_array(doquery("SELECT * FROM {{table}} WHERE `galaxy` = '" . $FleetRow['fleet_end_galaxy'] . "' AND `system` = '" . $FleetRow['fleet_end_system'] . "' AND `planet` = '" . $FleetRow['fleet_end_planet'] . "';", 'planets'), 0);
+            $iGalaxyPlace = mysqli_fetch_array(doquery("SELECT * FROM {{table}} WHERE `galaxy` = '" . $FleetRow['fleet_end_galaxy'] . "' AND `system` = '" . $FleetRow['fleet_end_system'] . "' AND `planet` = '" . $FleetRow['fleet_end_planet'] . "';", 'planets'), 0);
             $TargetAdress = sprintf($lang['sys_adress_planet'], $FleetRow['fleet_end_galaxy'], $FleetRow['fleet_end_system'], $FleetRow['fleet_end_planet']);
             if ($iGalaxyPlace['id_owner'] == 0 && $iGalaxyPlace['planet_type'] != 0) {
 
@@ -1842,8 +1852,8 @@ class FlyingFleetHandler {
     	
     	
     	//On vas stocker la flote d'invasion!
-    	print_r($FleetRow);
-    	die();
+    	//print_r($FleetRow);
+    	//die();
     	//On récup le proprio de la planete qui lance l'invasion
     	//On récup le proprio de la planete qui recoi l'invasion
     	
@@ -1874,7 +1884,7 @@ class FlyingFleetHandler {
         $fleetquery = doquery($QryFleet, 'fleets');
 
 
-        while ($CurrentFleet = mysql_fetch_array($fleetquery)) {
+        while ($CurrentFleet = mysqli_fetch_array($fleetquery)) {
             switch ($CurrentFleet["fleet_mission"]) {
                 case 1:
                     $this->MissionCaseAttack($CurrentFleet);

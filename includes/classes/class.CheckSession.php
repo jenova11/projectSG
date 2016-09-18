@@ -22,18 +22,20 @@ class CheckSession
             // END FIX BY JSTAR
 
             // BETTER QUERY BY LUCKY! REDUCE GENERAL QUERY FROM 11 TO 10.
+            
             $UserResult = doquery("SELECT {{table}}users.*, {{table}}statpoints.total_rank, {{table}}statpoints.total_points
                                     FROM {{table}}statpoints
                                     RIGHT JOIN {{table}}users ON {{table}}statpoints.id_owner = {{table}}users.id
                                     WHERE ({{table}}users.username = '{$TheCookie[1]}') LIMIT 1;", '');
 
-
-            if (mysql_num_rows($UserResult) != 1)
+           
+            if (mysqli_num_rows($UserResult) != 1)
             {
+            	
                 message($lang['ccs_multiple_users'], XGP_ROOT, 5, FALSE, FALSE);
             }
 
-            $UserRow    = mysql_fetch_array($UserResult);
+            $UserRow    = mysqli_fetch_array($UserResult);
 
             if ($UserRow["id"] != $TheCookie[0])
             {

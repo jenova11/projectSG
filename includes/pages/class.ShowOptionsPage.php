@@ -197,7 +197,7 @@ class ShowOptionsPage
 
 				$query = doquery("SELECT * FROM {{table}} WHERE id_owner = '".intval($CurrentUser['id'])."'", 'planets');
 
-				while($id = mysql_fetch_array($query))
+				while($id = mysqli_fetch_array($query))
 				{
 					doquery("UPDATE {{table}} SET
 					metal_perhour = '".read_config ( 'metal_basic_income' )."',

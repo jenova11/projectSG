@@ -50,7 +50,7 @@ class PluginsManager
 	{
 		$SELECT = doquery("SELECT 1 FROM {{table}} WHERE `plugin` = '" . $name . "' AND `status` = 1 LIMIT 1;", "plugins");
 		
-		return mysql_num_rows($SELECT) > 0;
+		return mysqli_num_rows($SELECT) > 0;
 	}
 	
 	/**
@@ -86,7 +86,7 @@ class PluginsManager
 		$SELECT = doquery("SELECT 1 FROM {{table}} WHERE `plugin` = '" . $name . "' LIMIT 1;", "plugins");
 		
 		//Si le plugin existe déjà en base, on UPDATE. Sinon, on INSERT.
-		if(mysql_num_rows($SELECT) > 0)
+		if(mysqli_num_rows($SELECT) > 0)
 		{
 			doquery("UPDATE {{table}} SET `status` = 1 WHERE `plugin`='". $name ."'", "plugins");
 		}else{

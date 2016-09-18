@@ -115,7 +115,7 @@ function display ($page, $topnav = TRUE, $metatags = '', $AdminPage = FALSE, $me
 		$page							= isset ( $_GET['page'] ) ? $_GET['page'] : NULL;
 		$mode							= isset ( $_GET['mode'] ) ? $_GET['mode'] : NULL; 
 		
-		while ($CurPlanet = mysql_fetch_array($ThisUsersPlanets))
+		while ($CurPlanet = mysqli_fetch_array($ThisUsersPlanets))
 		{
 			if ($CurPlanet["destruyed"] == 0)
 			{
@@ -144,7 +144,7 @@ function display ($page, $topnav = TRUE, $metatags = '', $AdminPage = FALSE, $me
 		$parse['planetlist'] 			.= '<div id="SecteurHeader">Exploitations</div>';
 		$ThisUsersSecteurs    			= SortUserSecteurs ( $user );
 
-		while ($CurSecteur = mysql_fetch_array($ThisUsersSecteurs))
+		while ($CurSecteur = mysqli_fetch_array($ThisUsersSecteurs))
 		{
 			if ($CurSecteur["destruyed"] == 0)
 			{
@@ -194,16 +194,22 @@ function display ($page, $topnav = TRUE, $metatags = '', $AdminPage = FALSE, $me
 
 	if ( $link )
 	{
-		mysql_close ( $link );
+		mysqli_close ( $link );
 	}
 
-	die();
+	//die();
 }
 
 
 
 
-
+if (!function_exists('mysql_result')) {
+	function mysql_result($result, $number, $field=0) {
+		mysqli_data_seek($result, $number);
+		$row = mysqli_fetch_array($result);
+		return $row[$field];
+	}
+}
 
 function display2 ($page)
 {
@@ -219,16 +225,17 @@ function display2 ($page)
 	echo $DisplayPage;
 	if ( $link )
 	{
-		mysql_close ( $link );
+		mysqli_close ( $link );
 	}
 
-	die();
+	//die();
 }
 
 
 
 function StdUserHeader ($metatags = '')
 {
+	global $debugbarRenderer;
 	$parse['-title-']	= read_config ( 'game_name' );
 	$parse['-favi-']	= "<link rel=\"shortcut icon\" href=\"./favicon.ico\">\n";
 	$parse['-meta-']	= "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\">\n";
@@ -243,8 +250,10 @@ function StdUserHeader ($metatags = '')
 	{
 		$parse['-style-']	= "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/css/styles.css\">\n";
 	}
-
+    $parse['-style-'] .= $debugbarRenderer->renderHead();
 	$parse['-meta-']	.= ($metatags) ? $metatags : "";
+	
+	$parse['-postBody-']	.=$debugbarRenderer->render();
 
 	return parsetemplate ( gettemplate ( 'general/simple_header' ) , $parse );
 }
@@ -345,42 +354,36 @@ function BuildPlanetAdressLink ( $CurrentPlanet )
 
 function doquery ( $query , $table , $fetch = FALSE )
 {
-	global $link, $debug;
+	global $link, $debug,$numqueries,$debug,$debugbar;
+
+	
+	//$debugbar["messages"]->addMessage("SQL");
 	
 	require ( XGP_ROOT . 'config.php' );
 
-	if ( !$link )
+	$link = mysqli_connect($dbsettings["server"],$dbsettings["user"],$dbsettings["pass"],$dbsettings["name"]);
+	if (mysqli_connect_errno())
 	{
-		$link = mysql_connect	(
-									$dbsettings["server"],
-									$dbsettings["user"],
-									$dbsettings["pass"]
-								) or $debug->error ( mysql_error() . "<br />$query" , "SQL Error" );
-
-		mysql_select_db ( $dbsettings["name"] ) or $debug->error ( mysql_error() . "<br />$query" , "SQL Error" );
-
-		echo mysql_error();
+		echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	}
-
-	$sql 		= str_replace ( "{{table}}" , $dbsettings["prefix"] . $table , $query );
-	//echo $sql.'<br />';
-	$sqlquery 	= mysql_query ( $sql ) or $debug->error ( mysql_error() . "<br />$sql<br />" , "SQL Error" );
-
-	unset ( $dbsettings );
-
-	global $numqueries,$debug;
+	$sql = str_replace ( "{{table}}" , $dbsettings["prefix"] . $table , $query );
+	//$debugbar["messages"]->addMessage($sql);
+	$retour = mysqli_query($link,$sql);
 	$numqueries++;
-
-	$debug->add ( "<tr><th>Query $numqueries: </th><th>$query</th><th>$table</th><th>$fetch</th></tr>");
-
-	if ( $fetch )
+	if (!$retour)
 	{
-		return mysql_fetch_array ( $sqlquery );
+		echo $sql.'<br />';
+		echo("Error description: " . mysqli_error($link));
+	}else{
+		if ( $fetch )
+		{
+			return mysqli_fetch_array($retour);
+		}else{
+			return $retour;
+		}
 	}
-	else
-	{
-		return $sqlquery;
-	}
+	
+	mysqli_close($link);
 
 }
 

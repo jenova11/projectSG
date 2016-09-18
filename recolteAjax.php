@@ -11,13 +11,13 @@ $UserDeuterium  = $planetrow['deuterium'];
 $UserMissiles   = $planetrow['interplanetary_misil'];
 
 //On regarde deja si l'on as des transporteur sur la colonie en cours.
-print_r($planetrow);
+//print_r($planetrow);
 $totalTransport = "";
 $totalTransport += $planetrow[$resource[202]] * $pricelist[202]['capacity'];
 $totalTransport += $planetrow[$resource[203]] * $pricelist[203]['capacity'];
 echo $totalTransport;
 
-print_r($_GET);
+//print_r($_GET);
 //on regarde le nombre de ressource a recupéré
 $sql = "SELECT metal, crystal, deuterium FROM {{table}} WHERE galaxy =".$_GET['galaxy']." AND system = ".$_GET['system']." AND planet=".$_GET['planet']."";
 $targetPlanet = doquery($sql,"planets",true);

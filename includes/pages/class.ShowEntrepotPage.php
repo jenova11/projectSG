@@ -14,7 +14,7 @@ class ShowEntrepotPage
                         WHERE e.`id_planet` = '.$CurrentPlanet['current_planet'];
                 $result = doquery($sql,'entrepot');
                 $item ='';
-                while($array = mysql_fetch_array($result)){
+                while($array = mysqli_fetch_array($result)){
                     $item .= '<div class="item_gouv">
                                 <div class="name">
                                     <div class="col1">

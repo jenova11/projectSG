@@ -55,7 +55,7 @@ class debug
 
 		$query = "explain select * from {{table}}";
 
-		$q = mysql_fetch_array(mysql_query(str_replace("{{table}}", $dbsettings["prefix"].'errors', $query))) or die($lang['cdg_fatal_error'].': ');
+		$q = mysqli_fetch_array(mysql_query(str_replace("{{table}}", $dbsettings["prefix"].'errors', $query))) or die($lang['cdg_fatal_error'].': ');
 
 		if (!function_exists('message'))
 			echo $lang['cdg_error_message']." <b>".$q['rows']."</b>";

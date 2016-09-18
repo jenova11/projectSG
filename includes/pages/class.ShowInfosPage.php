@@ -178,7 +178,7 @@ class ShowInfosPage
         $QrySelectMoons  = "SELECT * FROM {{table}} WHERE `planet_type` = '3' AND `id_owner` = '". intval($CurrentUser['id']) ."';";
         $MoonList        = doquery ( $QrySelectMoons, 'planets');
         $Combo           = "";
-        while ( $CurMoon = mysql_fetch_assoc($MoonList) )
+        while ( $CurMoon = mysqli_fetch_assoc($MoonList) )
         {
             if ( $CurMoon['id'] != $CurrentPlanet['id'] )
             {

@@ -66,11 +66,11 @@ class Fleets
 		$dest = array();
 		$depart = doquery("SELECT coord_x, coord_y FROM {{table}} WHERE galaxy = ".$orig_galaxy." AND system = ".$orig_system." AND planet = ".$orig_planet." ",'planets');
 		$arriver = doquery("SELECT coord_x, coord_y FROM {{table}} WHERE galaxy = ".$dest_galaxy." AND system = ".$dest_system." AND planet = ".$dest_planet." ",'planets');
-		if($array_dept = mysql_fetch_array($depart)){
+		if($array_dept = mysqli_fetch_array($depart)){
 			$dept['x'] = $array_dept['coord_x'];
 			$dept['y'] = $array_dept['coord_y'];
 		}
-		if($array_dest = mysql_fetch_array($arriver)){
+		if($array_dest = mysqli_fetch_array($arriver)){
 			$dest['x'] = $array_dest['coord_x'];
 			$dest['y'] = $array_dest['coord_y'];
 		}

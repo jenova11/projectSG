@@ -52,7 +52,7 @@ class ShowSearchPage
 		{
 			$result_list	= '';
 			
-			while($s = mysql_fetch_array($search, MYSQL_BOTH))
+			while($s = mysqli_fetch_array($search, MYSQL_BOTH))
 			{
 				if($type == 'playername' or $type == 'planetname')
 				{

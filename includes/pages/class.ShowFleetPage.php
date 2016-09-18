@@ -81,7 +81,7 @@ class ShowFleetPage
 		{
 			$fq = doquery("SELECT * FROM {{table}} WHERE fleet_owner='".intval($CurrentUser['id'])."'", "fleets");
 
-			while ( $f = mysql_fetch_array ( $fq ) )
+			while ( $f = mysqli_fetch_array ( $fq ) )
 			{
 				$i++;
 

@@ -48,7 +48,7 @@ class ShowMessagesPage
 			}
 		}
 
-		while ( $CurMess = mysql_fetch_array ( $UsrMess ) )
+		while ( $CurMess = mysqli_fetch_array ( $UsrMess ) )
 		{
 			$MessType              = $CurMess['message_type'];
 			$TotalMess[$MessType] += 1;
@@ -203,7 +203,7 @@ class ShowMessagesPage
 				
 				$messagesBody	= '';
 				
-				while ( $CurMess = mysql_fetch_array ( $UsrMess ) )
+				while ( $CurMess = mysqli_fetch_array ( $UsrMess ) )
 				{
 					$parse['message_id']		=	$CurMess['message_id'];
 					$parse['message_date']		=	date ( "m-d H:i:s" , $CurMess['message_time'] );
@@ -238,7 +238,7 @@ class ShowMessagesPage
 				$GameOps 		= doquery ($QrySelectUser, 'users');
 				$operatorsBody	= '';
 				
-				while ( $Ops = mysql_fetch_assoc ( $GameOps ) )
+				while ( $Ops = mysqli_fetch_assoc ( $GameOps ) )
 				{
 					$parse['dpath']		= DPATH;
 					$parse['username'] 	= $Ops['username'];

@@ -143,7 +143,7 @@ class ShowBuddyPage
 				$requestsReceived	= '';
 				$budys				= '';
 				
-				while ( $buddy = mysql_fetch_assoc ( $getBuddys ) )
+				while ( $buddy = mysqli_fetch_assoc ( $getBuddys ) )
 				{
 					if ( $buddy['active'] == 0 )
 					{

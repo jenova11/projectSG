@@ -101,7 +101,7 @@ class ShowAlliancePage extends bbCode
 			unset ( $d );
 		}
 
-		// EN ESTE CASO EL USUARIO SOLO ESTÁ DE VISITA EN LA ALIANZA
+		// EN ESTE CASO EL USUARIO SOLO ESTï¿½ DE VISITA EN LA ALIANZA
 		if ($mode == 'ainfo')
 		{
 			if ( isset ( $tag ) && $a == "" )
@@ -231,10 +231,10 @@ class ShowAlliancePage extends bbCode
 				{
 					$search = doquery ( "SELECT * FROM {{table}} WHERE ally_name LIKE '%" . mysql_escape_value ( $_POST['searchtext'] ) . "%' or ally_tag LIKE '%" . mysql_escape_value ( $_POST['searchtext'] ) . "%' LIMIT 30" , "alliance" );
 
-					if ( mysql_num_rows ( $search ) != 0 )
+					if ( mysqli_num_rows ( $search ) != 0 )
 					{
 						$parse['result']	= '';
-						while ( $s = mysql_fetch_array ( $search ) )
+						while ( $s = mysqli_fetch_array ( $search ) )
 						{
 							$searchData 					= array();
 							$searchData['ally_tag'] 		= "<a href=\"game.php?page=alliance&mode=apply&allyid=" . $s['id'] . "\">" . $s['ally_tag'] . "</a>";
@@ -407,7 +407,7 @@ class ShowAlliancePage extends bbCode
 
 				$i = 0;
 
-				while ( $u = mysql_fetch_array ( $listuser ) )
+				while ( $u = mysqli_fetch_array ( $listuser ) )
 				{
 					$UserPoints = doquery ( "SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '" . intval ( $u['id'] ) . "';" , 'statpoints' , TRUE );
 
@@ -896,11 +896,11 @@ class ShowAlliancePage extends bbCode
 				$i 				= 0;
 				$r				= $lang;
 				$s				= $lang;
-				$lang['i'] 		= mysql_num_rows($listuser);
+				$lang['i'] 		= mysqli_num_rows($listuser);
 				$page_list		= '';
 				$r['options']	= '';
 
-				while ( $u = mysql_fetch_array ( $listuser ) )
+				while ( $u = mysqli_fetch_array ( $listuser ) )
 				{
 					$UserPoints			= doquery ( "SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '" . intval ( $u['id'] ) . "';" , 'statpoints' , TRUE );
 
@@ -1050,7 +1050,7 @@ class ShowAlliancePage extends bbCode
 				$s 				= array();
 				$parse['list']	= '';
 				
-				while ( $r = mysql_fetch_array ( $query ) )
+				while ( $r = mysqli_fetch_array ( $query ) )
 				{
 
 					if ( isset ( $show ) && $r['id'] == $show )
@@ -1168,7 +1168,7 @@ class ShowAlliancePage extends bbCode
 					$listuser 		= doquery ( "SELECT * FROM {{table}} WHERE ally_id='" . intval ( $CurrentUser['ally_id'] ) . "'" , 'users' );
 					$righthand		= $lang;
 
-					while ( $u = mysql_fetch_array ( $listuser ) )
+					while ( $u = mysqli_fetch_array ( $listuser ) )
 					{
 						if ( $ally['ally_owner'] != $u['id'] )
 						{
@@ -1251,7 +1251,7 @@ class ShowAlliancePage extends bbCode
 				}
 
 				// SOLICITUDES
-				$request_count	= mysql_num_rows ( doquery ( "SELECT id FROM {{table}} WHERE ally_request='" . intval ( $ally['id'] ) . "'" , 'users' ) );
+				$request_count	= mysqli_num_rows ( doquery ( "SELECT id FROM {{table}} WHERE ally_request='" . intval ( $ally['id'] ) . "'" , 'users' ) );
 
 				if ( $request_count != 0 )
 				{
@@ -1271,7 +1271,7 @@ class ShowAlliancePage extends bbCode
 					$lang['ally_owner']		= '';
 				}
 
-				// INFORMACIÓN RESTANTE
+				// INFORMACIï¿½N RESTANTE
 				$lang['ally_image'] 		= ( $ally['ally_image'] != '' ) ? "<tr><th colspan=2><img src=\"{$ally['ally_image']}\"></td></tr>" : '';
 				$lang['range'] 				= $range;
 				$lang['ally_description'] 	= nl2br($this->bbCode($ally['ally_description']));
