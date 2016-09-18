@@ -10,7 +10,11 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 
 function ShowLeftMenu ()
 {
-	global $lang, $user;
+	global $lang, $user,$planetrow;
+
+	
+	
+
 
 	$parse					= $lang;
 	$parse['dpath']			= DPATH;
@@ -27,7 +31,11 @@ function ShowLeftMenu ()
 	{
 		$parse['admin_link']  	= "";
 	}
-
-	return parsetemplate(gettemplate('general/left_menu'), $parse);
+    if($planetrow['control_type'] == 1){
+    	return parsetemplate(gettemplate('general/left_menu'), $parse);
+    }else{
+    	return parsetemplate(gettemplate('general/left_menu2'), $parse);
+    }
+	
 }
 ?>
