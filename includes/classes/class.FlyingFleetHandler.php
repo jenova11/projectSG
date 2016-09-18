@@ -641,10 +641,10 @@ class FlyingFleetHandler {
                 $this->StoreGoodsToPlanet($FleetRow, FALSE);
                 $Message = sprintf($lang['sys_tran_mess_owner'], $TargetName, GetTargetAdressLink($FleetRow, ''), $FleetRow['fleet_resource_metal'], $lang['Metal'], $FleetRow['fleet_resource_crystal'], $lang['Crystal'], $FleetRow['fleet_resource_deuterium'], $lang['Deuterium']);
 
-                SendSimpleMessage($StartOwner, '', $FleetRow['fleet_start_time'], 5, $lang['sys_mess_tower'], $lang['sys_mess_transport'], $Message);
+                SendSimpleMessage($StartOwner, '0', $FleetRow['fleet_start_time'], 5, $lang['sys_mess_tower'], $lang['sys_mess_transport'], $Message);
                 if ($TargetOwner <> $StartOwner) {
                     $Message = sprintf($lang['sys_tran_mess_user'], $StartName, GetStartAdressLink($FleetRow, ''), $TargetName, GetTargetAdressLink($FleetRow, ''), $FleetRow['fleet_resource_metal'], $lang['Metal'], $FleetRow['fleet_resource_crystal'], $lang['Crystal'], $FleetRow['fleet_resource_deuterium'], $lang['Deuterium']);
-                    SendSimpleMessage($TargetOwner, '', $FleetRow['fleet_start_time'], 5, $lang['sys_mess_tower'], $lang['sys_mess_transport'], $Message);
+                    SendSimpleMessage($TargetOwner, '0', $FleetRow['fleet_start_time'], 5, $lang['sys_mess_tower'], $lang['sys_mess_transport'], $Message);
                 }
 
                 $QryUpdateFleet = "UPDATE {{table}} SET ";
@@ -663,7 +663,7 @@ class FlyingFleetHandler {
         } else {
             if ($FleetRow['fleet_end_time'] < time()) {
                 $Message = sprintf($lang['sys_tran_mess_back'], $StartName, GetStartAdressLink($FleetRow, ''));
-                SendSimpleMessage($StartOwner, '', $FleetRow['fleet_end_time'], 5, $lang['sys_mess_tower'], $lang['sys_mess_fleetback'], $Message);
+                SendSimpleMessage($StartOwner, '0', $FleetRow['fleet_end_time'], 5, $lang['sys_mess_tower'], $lang['sys_mess_fleetback'], $Message);
                 $this->RestoreFleetToPlanet($FleetRow, TRUE);
                 doquery("DELETE FROM {{table}} WHERE fleet_id=" . $FleetRow["fleet_id"], 'fleets');
             }
@@ -713,7 +713,7 @@ class FlyingFleetHandler {
                 $TargetMessage = $lang['sys_stay_mess_back'] . "<a href=\"game.php?page=galaxy&mode=3&galaxy=" . $FleetRow['fleet_start_galaxy'] . "&system=" . $FleetRow['fleet_start_system'] . "\">";
                 $TargetMessage .= $TargetAdress . "</a>" . $lang['sys_stay_mess_bend'] . "<br />" . $TargetAddedGoods;
 
-                SendSimpleMessage($FleetRow['fleet_owner'], '', $FleetRow['fleet_end_time'], 5, $lang['sys_mess_qg'], $lang['sys_mess_fleetback'], $TargetMessage);
+                SendSimpleMessage($FleetRow['fleet_owner'], '0', $FleetRow['fleet_end_time'], 5, $lang['sys_mess_qg'], $lang['sys_mess_fleetback'], $TargetMessage);
                 $this->RestoreFleetToPlanet($FleetRow, TRUE);
                 doquery("DELETE FROM {{table}} WHERE `fleet_id` = '" . $FleetRow["fleet_id"] . "';", 'fleets');
             }
@@ -745,11 +745,11 @@ class FlyingFleetHandler {
             if ($FleetRow['fleet_start_time'] <= time()) {
                 $Message = sprintf($lang['sys_tran_mess_owner'], $TargetName, GetTargetAdressLink($FleetRow, ''), $FleetRow['fleet_resource_metal'], $lang['Metal'], $FleetRow['fleet_resource_crystal'], $lang['Crystal'], $FleetRow['fleet_resource_deuterium'], $lang['Deuterium']);
 
-                SendSimpleMessage($StartOwner, '', $FleetRow['fleet_start_time'], 5, $lang['sys_mess_tower'], $lang['sys_mess_transport'], $Message);
+                SendSimpleMessage($StartOwner, '0', $FleetRow['fleet_start_time'], 5, $lang['sys_mess_tower'], $lang['sys_mess_transport'], $Message);
 
                 $Message = sprintf($lang['sys_tran_mess_user'], $StartName, GetStartAdressLink($FleetRow, ''), $TargetName, GetTargetAdressLink($FleetRow, ''), $FleetRow['fleet_resource_metal'], $lang['Metal'], $FleetRow['fleet_resource_crystal'], $lang['Crystal'], $FleetRow['fleet_resource_deuterium'], $lang['Deuterium']);
 
-                SendSimpleMessage($TargetOwner, '', $FleetRow['fleet_start_time'], 5, $lang['sys_mess_tower'], $lang['sys_mess_transport'], $Message);
+                SendSimpleMessage($TargetOwner, '0', $FleetRow['fleet_start_time'], 5, $lang['sys_mess_tower'], $lang['sys_mess_transport'], $Message);
 
                 $QryUpdateFleet = "UPDATE {{table}} SET ";
                 $QryUpdateFleet .= "`fleet_mess` = 2 ";
@@ -766,7 +766,7 @@ class FlyingFleetHandler {
         } else {
             if ($FleetRow['fleet_end_time'] < time()) {
                 $Message = sprintf($lang['sys_tran_mess_back'], $StartName, GetStartAdressLink($FleetRow, ''));
-                SendSimpleMessage($StartOwner, '', $FleetRow['fleet_end_time'], 5, $lang['sys_mess_tower'], $lang['sys_mess_fleetback'], $Message);
+                SendSimpleMessage($StartOwner, '0', $FleetRow['fleet_end_time'], 5, $lang['sys_mess_tower'], $lang['sys_mess_fleetback'], $Message);
                 $this->RestoreFleetToPlanet($FleetRow, TRUE);
                 doquery("DELETE FROM {{table}} WHERE fleet_id=" . $FleetRow["fleet_id"], 'fleets');
             }
@@ -869,7 +869,7 @@ class FlyingFleetHandler {
                         if ($ST >= "7")
                             $SpyMessage = $TargetTechnos . "<br />" . $AttackLink . $MessageEnd;
 
-                        SendSimpleMessage($CurrentUserID, '', $FleetRow['fleet_start_time'], 0, $lang['sys_mess_qg'], $lang['sys_mess_spy_report'], $SpyMessage);
+                        SendSimpleMessage($CurrentUserID, '0', $FleetRow['fleet_start_time'], 0, $lang['sys_mess_qg'], $lang['sys_mess_spy_report'], $SpyMessage);
 
                         $TargetMessage = $lang['sys_mess_spy_ennemyfleet'] . " " . $CurrentPlanet['name'];
 
@@ -881,7 +881,7 @@ class FlyingFleetHandler {
                         $TargetMessage .= $lang['sys_mess_spy_seen_at'] . " " . $TargetPlanet['name'];
                         $TargetMessage .= " [" . $TargetPlanet["galaxy"] . ":" . $TargetPlanet["system"] . ":" . $TargetPlanet["planet"] . "].";
 
-                        SendSimpleMessage($TargetUserID, '', $FleetRow['fleet_start_time'], 0, $lang['sys_mess_spy_control'], $lang['sys_mess_spy_activity'], $TargetMessage);
+                        SendSimpleMessage($TargetUserID, '0', $FleetRow['fleet_start_time'], 0, $lang['sys_mess_spy_control'], $lang['sys_mess_spy_activity'], $TargetMessage);
 
                         if ($TargetChances >= $SpyerChances) {
                             $QryUpdateGalaxy = "UPDATE {{table}} SET ";
@@ -948,7 +948,7 @@ class FlyingFleetHandler {
 
 
                         $SpyMessage = $Materials;
-                        SendSimpleMessage($CurrentUserID, '', $FleetRow['fleet_start_time'], 0, $lang['sys_mess_qg'], 'Rapport d\'analise', $SpyMessage);
+                        SendSimpleMessage($CurrentUserID, '0', $FleetRow['fleet_start_time'], 0, $lang['sys_mess_qg'], 'Rapport d\'analise', $SpyMessage);
 
 
                         //doquery("UPDATE {{table}} SET `fleet_mess` = '1' WHERE `fleet_id` = '". $FleetRow["fleet_id"] ."';", 'fleets');
@@ -1029,7 +1029,7 @@ class FlyingFleetHandler {
                 doquery($QryUpdateGalaxy, 'galaxy');
 
                 $Message = sprintf($lang['sys_recy_gotten'], Format::pretty_number($RecycledGoods["metal"]), $lang['Metal'], Format::pretty_number($RecycledGoods["crystal"]), $lang['Crystal']);
-                SendSimpleMessage($FleetRow['fleet_owner'], '', $FleetRow['fleet_start_time'], 4, $lang['sys_mess_spy_control'], $lang['sys_recy_report'], $Message);
+                SendSimpleMessage($FleetRow['fleet_owner'], '0', $FleetRow['fleet_start_time'], 4, $lang['sys_mess_spy_control'], $lang['sys_recy_report'], $Message);
 
                 $QryUpdateFleet = "UPDATE {{table}} SET ";
                 $QryUpdateFleet .= "`fleet_resource_metal` = `fleet_resource_metal` + '" . $RecycledGoods["metal"] . "', ";
@@ -1044,7 +1044,7 @@ class FlyingFleetHandler {
         else {
             if ($FleetRow['fleet_end_time'] <= time()) {
                 $Message = sprintf($lang['sys_tran_mess_owner'], $TargetName, GetTargetAdressLink($FleetRow, ''), Format::pretty_number($FleetRow['fleet_resource_metal']), $lang['Metal'], Format::pretty_number($FleetRow['fleet_resource_crystal']), $lang['Crystal'], Format::pretty_number($FleetRow['fleet_resource_deuterium']), $lang['Deuterium']);
-                SendSimpleMessage($FleetRow['fleet_owner'], '', $FleetRow['fleet_end_time'], 4, $lang['sys_mess_spy_control'], $lang['sys_mess_fleetback'], $Message);
+                SendSimpleMessage($FleetRow['fleet_owner'], '0', $FleetRow['fleet_end_time'], 4, $lang['sys_mess_spy_control'], $lang['sys_mess_fleetback'], $Message);
                 $this->RestoreFleetToPlanet($FleetRow, TRUE);
                 doquery("DELETE FROM {{table}} WHERE `fleet_id` = '" . $FleetRow["fleet_id"] . "';", 'fleets');
             }
@@ -1054,7 +1054,7 @@ class FlyingFleetHandler {
     private function MissionCaseColonisation($FleetRow) {
         global $lang, $resource;
 
-        $iPlanetCount = mysql_result(doquery("SELECT count(*) FROM {{table}} WHERE `id_owner` = '" . $FleetRow['fleet_owner'] . "' AND `planet_type` = '1' AND `destruyed` = '0'", 'planets'), 0);
+        $iPlanetCount = doquery("SELECT count(*) FROM {{table}} WHERE `id_owner` = '" . $FleetRow['fleet_owner'] . "' AND `planet_type` = '1' AND `destruyed` = '0'", 'planets');
 
         if ($FleetRow['fleet_mess'] == 0) {
             $iGalaxyPlace = mysqli_fetch_array(doquery("SELECT * FROM {{table}} WHERE `galaxy` = '" . $FleetRow['fleet_end_galaxy'] . "' AND `system` = '" . $FleetRow['fleet_end_system'] . "' AND `planet` = '" . $FleetRow['fleet_end_planet'] . "';", 'planets'), 0);
@@ -1062,13 +1062,13 @@ class FlyingFleetHandler {
             if ($iGalaxyPlace['id_owner'] == 0 && $iGalaxyPlace['planet_type'] == 1) {
                 if ($iPlanetCount >= MAX_PLAYER_PLANETS) {
                     $TheMessage = $lang['sys_colo_arrival'] . $TargetAdress . $lang['sys_colo_maxcolo'] . MAX_PLAYER_PLANETS . $lang['sys_colo_planet'];
-                    SendSimpleMessage($FleetRow['fleet_owner'], '', $FleetRow['fleet_start_time'], 0, $lang['sys_colo_mess_from'], $lang['sys_colo_mess_report'], $TheMessage);
+                    SendSimpleMessage($FleetRow['fleet_owner'], '0', $FleetRow['fleet_start_time'], 0, $lang['sys_colo_mess_from'], $lang['sys_colo_mess_report'], $TheMessage);
                     doquery("UPDATE {{table}} SET `fleet_mess` = '1' WHERE `fleet_id` = " . $FleetRow["fleet_id"], 'fleets');
                 } else {
                     $NewOwnerPlanet = CreateOnePlanetRecord($FleetRow['fleet_end_galaxy'], $FleetRow['fleet_end_system'], $FleetRow['fleet_end_planet'], $FleetRow['fleet_owner'], $lang['sys_colo_defaultname'], FALSE);
                     if ($NewOwnerPlanet == TRUE) {
                         $TheMessage = $lang['sys_colo_arrival'] . $TargetAdress . $lang['sys_colo_allisok'];
-                        SendSimpleMessage($FleetRow['fleet_owner'], '', $FleetRow['fleet_start_time'], 0, $lang['sys_colo_mess_from'], $lang['sys_colo_mess_report'], $TheMessage);
+                        SendSimpleMessage($FleetRow['fleet_owner'], '0', $FleetRow['fleet_start_time'], 0, $lang['sys_colo_mess_from'], $lang['sys_colo_mess_report'], $TheMessage);
                         if ($FleetRow['fleet_amount'] == 1) {
                             $this->StoreGoodsToPlanet($FleetRow);
                             doquery("DELETE FROM {{table}} WHERE fleet_id=" . $FleetRow["fleet_id"], 'fleets');
@@ -1102,13 +1102,13 @@ class FlyingFleetHandler {
                         }
                     } else {
                         $TheMessage = $lang['sys_colo_arrival'] . $TargetAdress . $lang['sys_colo_badpos'];
-                        SendSimpleMessage($FleetRow['fleet_owner'], '', $FleetRow['fleet_start_time'], 0, $lang['sys_colo_mess_from'], $lang['sys_colo_mess_report'], $TheMessage);
+                        SendSimpleMessage($FleetRow['fleet_owner'], '0', $FleetRow['fleet_start_time'], 0, $lang['sys_colo_mess_from'], $lang['sys_colo_mess_report'], $TheMessage);
                         doquery("UPDATE {{table}} SET `fleet_mess` = '1' WHERE `fleet_id` = " . $FleetRow["fleet_id"], 'fleets');
                     }
                 }
             } else {
                 $TheMessage = $lang['sys_colo_arrival'] . $TargetAdress . $lang['sys_colo_notfree'];
-                SendSimpleMessage($FleetRow['fleet_owner'], '', $FleetRow['fleet_end_time'], 0, $lang['sys_colo_mess_from'], $lang['sys_colo_mess_report'], $TheMessage);
+                SendSimpleMessage($FleetRow['fleet_owner'], '0', $FleetRow['fleet_end_time'], 0, $lang['sys_colo_mess_from'], $lang['sys_colo_mess_report'], $TheMessage);
                 doquery("UPDATE {{table}} SET `fleet_mess` = '1' WHERE `fleet_id` = " . $FleetRow["fleet_id"], 'fleets');
             }
         } elseif ($FleetRow['fleet_end_time'] < time()) {
@@ -1118,29 +1118,31 @@ class FlyingFleetHandler {
     }
 
     private function MissionCaseExploit($FleetRow) {
-        global $lang, $resource;
+        global $lang, $resource,$debugbar;
 
-        $iPlanetCount = mysql_result(doquery("SELECT count(*) FROM {{table}} WHERE `id_owner` = '" . $FleetRow['fleet_owner'] . "' AND `planet_type` = '1' AND `destruyed` = '0'", 'planets'), 0);
-
+        $debugbar["messages"]->addMessage('debut mission');
+        $iPlanetCount = doquery("SELECT count(*) FROM {{table}} WHERE `id_owner` = '" . $FleetRow['fleet_owner'] . "' AND `destruyed` = '0'", 'planets',true);
+        $debugbar["messages"]->addMessage($iPlanetCount);
+        $debugbar["messages"]->addMessage($FleetRow);
         if ($FleetRow['fleet_mess'] == 0) {
-            $iGalaxyPlace = mysqli_fetch_array(doquery("SELECT * FROM {{table}} WHERE `galaxy` = '" . $FleetRow['fleet_end_galaxy'] . "' AND `system` = '" . $FleetRow['fleet_end_system'] . "' AND `planet` = '" . $FleetRow['fleet_end_planet'] . "';", 'planets'), 0);
+            $iGalaxyPlace = doquery("SELECT * FROM {{table}} WHERE `galaxy` = '" . $FleetRow['fleet_end_galaxy'] . "' AND `system` = '" . $FleetRow['fleet_end_system'] . "' AND `planet` = '" . $FleetRow['fleet_end_planet'] . "';", 'planets',true);
             $TargetAdress = sprintf($lang['sys_adress_planet'], $FleetRow['fleet_end_galaxy'], $FleetRow['fleet_end_system'], $FleetRow['fleet_end_planet']);
             if ($iGalaxyPlace['id_owner'] == 0 && $iGalaxyPlace['planet_type'] != 0) {
-
+            	$debugbar["messages"]->addMessage("Au bon endrois");
                 $NewOwnerPlanet = CreateOneSecteurRecord($FleetRow['fleet_end_galaxy'], $FleetRow['fleet_end_system'], $FleetRow['fleet_end_planet'], $FleetRow['fleet_owner'], $lang['sys_colo_defaultname'], FALSE);
                 if ($NewOwnerPlanet == TRUE) {
                     $TheMessage = $lang['sys_colo_arrival'] . $TargetAdress . $lang['sys_secteur_allisok'];
-                    SendSimpleMessage($FleetRow['fleet_owner'], '', $FleetRow['fleet_start_time'], 0, $lang['sys_secteur_mess_from'], $lang['sys_secteur_mess_report'], $TheMessage);
+                    SendSimpleMessage($FleetRow['fleet_owner'], '0', $FleetRow['fleet_start_time'], 0, $lang['sys_secteur_mess_from'], $lang['sys_secteur_mess_report'], $TheMessage);
                     $this->RestoreFleetToPlanet($FleetRow, FALSE);
                     doquery("DELETE FROM {{table}} WHERE `fleet_id` = '" . $FleetRow["fleet_id"] . "';", 'fleets');
                 } else {
                     $TheMessage = $lang['sys_colo_arrival'] . $TargetAdress . $lang['sys_colo_badpos'];
-                    SendSimpleMessage($FleetRow['fleet_owner'], '', $FleetRow['fleet_start_time'], 0, $lang['sys_colo_mess_from'], $lang['sys_colo_mess_report'], $TheMessage);
+                    SendSimpleMessage($FleetRow['fleet_owner'], '0', $FleetRow['fleet_start_time'], 0, $lang['sys_colo_mess_from'], $lang['sys_colo_mess_report'], $TheMessage);
                     doquery("UPDATE {{table}} SET `fleet_mess` = '1' WHERE `fleet_id` = " . $FleetRow["fleet_id"], 'fleets');
                 }
             } else {
                 $TheMessage = $lang['sys_colo_arrival'] . $TargetAdress . $lang['sys_colo_notfree'];
-                SendSimpleMessage($FleetRow['fleet_owner'], '', $FleetRow['fleet_end_time'], 0, $lang['sys_colo_mess_from'], $lang['sys_colo_mess_report'], $TheMessage);
+                SendSimpleMessage($FleetRow['fleet_owner'], '0', $FleetRow['fleet_end_time'], 0, $lang['sys_colo_mess_from'], $lang['sys_colo_mess_report'], $TheMessage);
                 doquery("UPDATE {{table}} SET `fleet_mess` = '1' WHERE `fleet_id` = " . $FleetRow["fleet_id"], 'fleets');
             }
         } elseif ($FleetRow['fleet_end_time'] < time()) {
@@ -1518,7 +1520,7 @@ class FlyingFleetHandler {
                 $QryUpdateFleet .= "LIMIT 1 ;";
                 doquery($QryUpdateFleet, 'fleets');
 
-                SendSimpleMessage($CurrentUserID, '', $FleetRow['fleet_start_time'], 3, $lang['sys_mess_tower'], $lang['sys_mess_destruc_report'], $raport);
+                SendSimpleMessage($CurrentUserID, '0', $FleetRow['fleet_start_time'], 3, $lang['sys_mess_tower'], $lang['sys_mess_destruc_report'], $raport);
 
                 $raport2 = "<a href=\"#\" OnClick=\'f(\"CombatReport.php?raport=" . $rid . "\", \"\");\' >";
                 $raport2 .= "<center>";
@@ -1532,7 +1534,7 @@ class FlyingFleetHandler {
 
                 $raport2 .= $lang['sys_mess_destruc_report'] . " [" . $FleetRow['fleet_end_galaxy'] . ":" . $FleetRow['fleet_end_system'] . ":" . $FleetRow['fleet_end_planet'] . "] </font></a><br /><br />";
 
-                SendSimpleMessage($TargetUserID, '', $FleetRow['fleet_start_time'], 3, $lang['sys_mess_tower'], $lang['sys_mess_destruc_report'], $raport2);
+                SendSimpleMessage($TargetUserID, '0', $FleetRow['fleet_start_time'], 3, $lang['sys_mess_tower'], $lang['sys_mess_destruc_report'], $raport2);
             }
 
             $fquery = "";
@@ -1651,7 +1653,7 @@ class FlyingFleetHandler {
                 if (empty($message))
                     $message = $lang['ma_planet_without_defens'];
 
-                SendSimpleMessage($Target['id'], '', $FleetRow['fleet_end_time'], 3, $lang['sys_mess_tower'], $lang['gl_missile_attack'], $message_vorlage . $message);
+                SendSimpleMessage($Target['id'], '0', $FleetRow['fleet_end_time'], 3, $lang['sys_mess_tower'], $lang['gl_missile_attack'], $message_vorlage . $message);
 
                 doquery("DELETE FROM {{table}} WHERE fleet_id = '" . intval($FleetRow['fleet_id']) . "'", 'fleets');
             }
@@ -1726,7 +1728,7 @@ class FlyingFleetHandler {
                     $LostAmount = (($Hasard * 33) + 1) / 100;
 
                     if ($LostAmount == 1) {
-                        SendSimpleMessage($FleetOwner, '', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $lang['sys_expe_blackholl_2']);
+                        SendSimpleMessage($FleetOwner, '0', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $lang['sys_expe_blackholl_2']);
                         doquery("DELETE FROM {{table}} WHERE `fleet_id` = " . $FleetRow["fleet_id"], 'fleets');
                     } else {
                         $all_destroyed = TRUE;
@@ -1744,15 +1746,15 @@ class FlyingFleetHandler {
                             $QryUpdateFleet .= "WHERE ";
                             $QryUpdateFleet .= "`fleet_id` = '" . $FleetRow["fleet_id"] . "';";
                             doquery($QryUpdateFleet, 'fleets');
-                            SendSimpleMessage($FleetOwner, '', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $lang['sys_expe_blackholl_1']);
+                            SendSimpleMessage($FleetOwner, '0', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $lang['sys_expe_blackholl_1']);
                         } else {
-                            SendSimpleMessage($FleetOwner, '', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $lang['sys_expe_blackholl_2']);
+                            SendSimpleMessage($FleetOwner, '0', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $lang['sys_expe_blackholl_2']);
                             doquery("DELETE FROM {{table}} WHERE `fleet_id` = " . $FleetRow["fleet_id"], 'fleets');
                         }
                     }
                 } elseif ($Hasard == 3) {
                     doquery("UPDATE {{table}} SET `fleet_mess` = '1' WHERE `fleet_id` = " . $FleetRow["fleet_id"], 'fleets');
-                    SendSimpleMessage($FleetOwner, '', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $lang['sys_expe_nothing_1']);
+                    SendSimpleMessage($FleetOwner, '0', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $lang['sys_expe_nothing_1']);
                 } elseif ($Hasard >= 4 && $Hasard < 7) {
                     if ($FleetCapacity > 5000) {
                         $MinCapacity = $FleetCapacity - 5000;
@@ -1776,11 +1778,11 @@ class FlyingFleetHandler {
 
                         $Message = sprintf($lang['sys_expe_found_goods'], Format::pretty_number($FoundMetal), $lang['Metal'], Format::pretty_number($FoundCrist), $lang['Crystal'], Format::pretty_number($FoundDeute), $lang['Deuterium'], Format::pretty_number($FoundDark), $lang['Darkmatter']);
 
-                        SendSimpleMessage($FleetOwner, '', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $Message);
+                        SendSimpleMessage($FleetOwner, '0', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $Message);
                     }
                 } elseif ($Hasard == 7) {
                     doquery("UPDATE {{table}} SET `fleet_mess` = '1' WHERE `fleet_id` = " . $FleetRow["fleet_id"], 'fleets');
-                    SendSimpleMessage($FleetOwner, '', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $lang['sys_expe_nothing_2']);
+                    SendSimpleMessage($FleetOwner, '0', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $lang['sys_expe_nothing_2']);
                 } elseif ($Hasard >= 8 && $Hasard < 11) {
                     $FoundChance = $FleetPoints / $FleetCount;
                     for ($Ship = 202; $Ship <= 215; $Ship++) {
@@ -1813,7 +1815,7 @@ class FlyingFleetHandler {
                     doquery($QryUpdateFleet, 'fleets');
 
                     $Message = $lang['sys_expe_found_ships'] . $FoundShipMess . "";
-                    SendSimpleMessage($FleetOwner, '', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $Message);
+                    SendSimpleMessage($FleetOwner, '0', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $Message);
                 }
             }
         }
@@ -1843,7 +1845,7 @@ class FlyingFleetHandler {
                 doquery("UPDATE `{{table}}` SET `darkmatter` = `darkmatter` + '" . $FleetRow['fleet_resource_darkmatter'] . "' WHERE `id` =" . $FleetRow['fleet_owner'] . " LIMIT 1 ;", 'users');
                 doquery("DELETE FROM {{table}} WHERE `fleet_id` = " . intval($FleetRow["fleet_id"]), 'fleets');
 
-                SendSimpleMessage($FleetOwner, '', $FleetRow['fleet_end_time'], 15, $MessSender, $MessTitle, $lang['sys_expe_back_home']);
+                SendSimpleMessage($FleetOwner, '0', $FleetRow['fleet_end_time'], 15, $MessSender, $MessTitle, $lang['sys_expe_back_home']);
             }
         }
     }
