@@ -1840,6 +1840,10 @@ class FlyingFleetHandler {
 
     private function MissionCaseInvasion($FleetRow){
     	
+    	
+    	//On vas stocker la flote d'invasion!
+    	print_r($FleetRow);
+    	die();
     	//On récup le proprio de la planete qui lance l'invasion
     	//On récup le proprio de la planete qui recoi l'invasion
     	
